@@ -3,6 +3,7 @@ import * as React from 'react';
 import Toolbar from './Toolbar';
 import EditorContainer from './EditorContainer';
 import Button from './Button';
+import BackgroundPicker from './BackgroundPicker';
 
 import { EditorConfig } from '../types';
 
@@ -71,10 +72,7 @@ export default class App extends React.Component<{}, { config: EditorConfig }> {
 
 		return <div style={appStyles}>
 			<Toolbar config={config} onChange={config => this.setState({ config })}>
-				<Button>Blah blah</Button>
-				<Button>Hello</Button>
-				<Button>YoYoYoYOYOYO</Button>
-				<Button>Click</Button>
+				<BackgroundPicker />
 			</Toolbar>
 			<EditorContainer config={config} />
 			<style>{styleEmbed}</style>
