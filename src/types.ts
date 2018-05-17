@@ -8,4 +8,7 @@ export type Color = RGBColor;
 export type MonacarbonConfig = {
 	backgroundColor: string | Color;
 	editor: EditorConfig;
+	shadowEnabled: boolean;
+	shadowOffset: number;
+	shadowSpread: number;
 }

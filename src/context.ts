@@ -29,8 +29,11 @@ const defaultEditorConfig: EditorConfig = {
 };
 
 export const defaultConfig: MonacarbonConfig = {
-	backgroundColor: '#FFFFFF',
+	backgroundColor: '#F5A623',
 	editor: defaultEditorConfig,
+	shadowEnabled: true,
+	shadowSpread: 30,
+	shadowOffset: 10,
 }
 
 const AppContext = createContext(defaultConfig);

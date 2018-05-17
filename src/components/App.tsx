@@ -10,7 +10,10 @@ import { MonacarbonConfig } from '../types';
 
 import { saveImage } from '../actions';
 
-const styleEmbed = `
+import Slider from './Slider';
+import Toggle from './Toggle';
+
+const styleEmbed = ({ shadowEnabled, shadowOffset, shadowSpread }: any) => `
 html, body, #app {
 	padding: 0;
 	width: 100%;
@@ -21,7 +24,7 @@ html, body, #app {
 .monacarbon-editor {
 	padding: 20px;
 	border-radius: 10px;
-	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+	${shadowEnabled ? `box-shadow: 0 ${shadowOffset}px ${shadowSpread}px rgba(0, 0, 0, 0.55);` : ''}
 	z-index: 1;
 }
 `;
@@ -52,18 +55,25 @@ export default class App extends React.Component<{}, { config: MonacarbonConfig 
 			<AppContext.Provider value={config}>
 				<div style={appStyles}>
 					<Toolbar>
-						<BackgroundPicker onChange={color => this.setState({
-							config: {
-								...config,
-								backgroundColor: color
-							}
-						})}/>
+						<BackgroundPicker onChange={color => this.updateConfig('backgroundColor', color)}/>
 						<Button onClick={saveImage}>Save PNG</Button>
+						<Toggle label='Drop Shadow' value={config.shadowEnabled} onChange={value => this.updateConfig('shadowEnabled', value)}/>
+						<Slider min={0} max={100} step={10} value={config.shadowOffset} label='Shadow Offset' onChange={value => this.updateConfig('shadowOffset', value)} />
+						<Slider min={0} max={100} step={10} value={config.shadowSpread} label='Shadow Spread' onChange={value => this.updateConfig('shadowSpread', value)} />
 					</Toolbar>
 					<EditorContainer />
-					<style>{styleEmbed}</style>
+					<style>{styleEmbed(config)}</style>
 				</div>
 			</AppContext.Provider>
 		);
+	}
+
+	private updateConfig<K extends keyof MonacarbonConfig>(key: K, value: MonacarbonConfig[K]) {
+		this.setState({
+			config: {
+				...this.state.config,
+				[key]: value,
+			},
+		});
 	}
 }
