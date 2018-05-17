@@ -3,6 +3,18 @@ import * as React from 'react';
 
 import { EditorConfig } from '../types';
 
+const defaultText = `const pluckDeep = key => obj => key.split('.').reduce((accum, key) => accum[key], obj)
+
+const compose = (...fns) => res => fns.reduce((accum, next) => next(accum), res)
+
+const unfold = (f, seed) => {
+  const go = (f, seed, acc) => {
+    const res = f(seed)
+    return res ? go(f, res[1], acc.concat([res[0]])) : acc
+  }
+  return go(f, seed, [])
+}`;
+
 interface MonacoEditorProps {
 	config: EditorConfig;
 }
@@ -34,11 +46,7 @@ export default class MonacoEditor extends React.Component<MonacoEditorProps, Mon
 			this.editorRef.current,
 			{
 				...this.props.config,
-				value: [
-					'function x() {',
-					'\tconsole.log("Hello world!");',
-					'}'
-				].join('\n'),
+				value: defaultText,
 				language: 'typescript'
 			}
 		);
