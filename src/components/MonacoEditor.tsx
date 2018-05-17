@@ -88,19 +88,15 @@ export default class MonacoEditor extends React.Component<MonacoEditorProps, Mon
 	}
 
 	render() {
-		let style: React.CSSProperties;
+		const style: React.CSSProperties = {};
 
 		if (this.editor) {
 			const { lineHeight, lineCount, maxLineWidth } = this.state;
 			
-			style = {
-				height: `${lineHeight * lineCount}px`,
-				width: `${maxLineWidth}px`,
-			}
+			style.height = `${lineHeight * lineCount}px`;
+			style.width = `${maxLineWidth}px`;
 		} else {
-			style = {
-				display: 'none'
-			}
+			style.display = 'none';
 		}
 
 		return <div ref={this.editorRef} style={style} />;

@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import Toolbar from './Toolbar';
-import MonacoEditor from './MonacoEditor';
+import EditorContainer from './EditorContainer';
 
 import { EditorConfig } from '../types';
 
@@ -34,6 +34,7 @@ const defaultConfig: EditorConfig = {
 const styleEmbed = `.monacarbon-editor {
 	padding: 20px;
 	border-radius: 10px;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
 }`;
 
 const appStyles: React.CSSProperties = {
@@ -57,7 +58,7 @@ export default class App extends React.Component<{}, { config: EditorConfig }> {
 
 		return <div style={appStyles}>
 			<Toolbar config={config} onChange={config => this.setState({ config })} />
-			<MonacoEditor config={config} />
+			<EditorContainer config={config} />
 			<style>{styleEmbed}</style>
 		</div>;
 	}
