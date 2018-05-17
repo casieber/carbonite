@@ -4,6 +4,8 @@ import * as ReactDOM from 'react-dom';
 
 import App from './components/App';
 
+import { ROOT_NODE_ID } from './constants';
+
 (self as any).MonacoEnvironment = {
 	getWorkerUrl: function (moduleId: any, label: string) {
 		if (label === 'json') {
@@ -24,5 +26,5 @@ import App from './components/App';
 
 ReactDOM.render(
 	<App />,
-	document.getElementById('app'),
+	document.getElementById(ROOT_NODE_ID),
 );

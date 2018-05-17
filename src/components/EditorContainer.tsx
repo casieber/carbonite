@@ -3,6 +3,7 @@ import * as React from 'react';
 import MonacoEditor from './MonacoEditor';
 import { EditorConfig, Color } from '../types';
 import AppContext from '../context';
+import { CAPTURE_NODE_ID, CAPTURE_HIDDEN_CLASSNAME } from '../constants';
 
 const containerStyles: React.CSSProperties = {
 	display: 'flex',
@@ -52,12 +53,12 @@ export default class EditorContainer extends React.Component {
 	render() {
 		return <AppContext.Consumer>
 			{({ editor, backgroundColor }) =>
-				<div style={containerStyles} id="container">
+				<div style={containerStyles} id={CAPTURE_NODE_ID}>
 					<div style={innerContainerStyles}>
 						<MonacoEditor config={editor} />
 						<div style={backgroundLayers}>
-							<div style={whiteImage} className="eliminateOnSave" />
-							<div style={alphaImage} className="eliminateOnSave" />
+							<div style={whiteImage} className={CAPTURE_HIDDEN_CLASSNAME} />
+							<div style={alphaImage} className={CAPTURE_HIDDEN_CLASSNAME} />
 							<div style={buildColorStyle(backgroundColor)} />
 						</div>
 					</div>

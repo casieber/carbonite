@@ -8,6 +8,8 @@ import BackgroundPicker from './BackgroundPicker';
 import AppContext, { defaultConfig } from '../context';
 import { MonacarbonConfig } from '../types';
 
+import { saveImage } from '../actions';
+
 const styleEmbed = `
 html, body, #app {
 	padding: 0;
@@ -56,6 +58,7 @@ export default class App extends React.Component<{}, { config: MonacarbonConfig 
 								backgroundColor: color
 							}
 						})}/>
+						<Button onClick={saveImage}>Save PNG</Button>
 					</Toolbar>
 					<EditorContainer />
 					<style>{styleEmbed}</style>
