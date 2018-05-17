@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import { Toggle as FabricToggle } from 'office-ui-fabric-react';
+
 export interface ToggleProps {
 	/**
 	 * The current toggle state
@@ -17,15 +19,8 @@ export interface ToggleProps {
 	onChange: (value: boolean) => any;
 }
 
-const Toggle = ({ value, label, onChange }: ToggleProps) => (
-	<span>
-		<label>{label}</label>
-		<input
-			type="checkbox"
-			checked={value}
-			onChange={e => onChange(e.target.checked)}
-		/>
-	</span>
+const Toggle = ({ onChange, ...others }: ToggleProps) => (
+	<FabricToggle {...others} onChanged={onChange} />
 );
 
 export default Toggle;

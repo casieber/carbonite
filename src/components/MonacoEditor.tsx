@@ -56,6 +56,16 @@ export default class MonacoEditor extends React.Component<
 		this.resizeIfNeeded();
 	}
 
+	componentWillReceiveProps(nextProps: MonacoEditorProps) {
+		if (
+			nextProps.config.theme !== this.props.config.theme &&
+			nextProps.config.theme &&
+			this.editor
+		) {
+			monaco.editor.setTheme(nextProps.config.theme);
+		}
+	}
+
 	resizeIfNeeded = (evt?: monaco.editor.IModelContentChangedEvent) => {
 		if (!this.editor) {
 			// Without an editor, there is nothing to resize

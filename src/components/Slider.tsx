@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import { Slider as FabricSlider } from 'office-ui-fabric-react';
+
 export interface SliderProps {
 	/**
 	 * The minimum value for the slider
@@ -36,9 +38,6 @@ export default class Slider extends React.Component<SliderProps> {
 	render() {
 		const { onChange, ...others } = this.props;
 
-		return <input type="range" {...others} onChange={this.handleChange} />;
+		return <FabricSlider {...others} onChange={onChange} />;
 	}
-
-	private handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-		this.props.onChange(e.target.valueAsNumber);
 }

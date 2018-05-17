@@ -4,6 +4,8 @@ import { Color } from '../types';
 
 import AppContext from '../context';
 
+import Button from './Button';
+
 interface BackgroundPickerProps {
 	/**
 	 * Called when the color changes.
@@ -34,12 +36,16 @@ export default class BackgroundPicker extends React.Component<
 			<AppContext.Consumer>
 				{value => (
 					<div>
-						<button onClick={() => this.setState({ open: true })}>BG</button>
+						<Button onClick={() => this.setState({ open: true })}>
+							Change Background
+						</Button>
 						{open && (
-							<SketchPicker
-								color={value.backgroundColor}
-								onChange={({ rgb }) => onChange(rgb)}
-							/>
+							<div style={{ position: 'absolute', zIndex: 5 }}>
+								<SketchPicker
+									color={value.backgroundColor}
+									onChange={({ rgb }) => onChange(rgb)}
+								/>
+							</div>
 						)}
 					</div>
 				)}

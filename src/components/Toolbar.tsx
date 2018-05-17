@@ -1,24 +1,78 @@
 import * as React from 'react';
-import { EditorConfig } from '../types';
+import {
+	CommandBar,
+	IContextualMenuItem,
+	CommandButton,
+} from 'office-ui-fabric-react';
 
-import domToImage, { Options } from 'dom-to-image';
+import themes from '../themes';
+import AppContext from '../context';
 
-const style: React.CSSProperties = {
-	display: 'flex',
-	flexDirection: 'row',
-	alignItems: 'space-between',
-	padding: '10px',
-};
+/**
+ * Left side menu bar items
+ */
+const closeItems = ({ theme, setTheme }: any): IContextualMenuItem[] => [
+	{
+		key: 'theme',
+		name: 'Theme',
+		onRender: item => {
+			return (
+				<CommandButton menuProps={{ items: item.subMenuProps.items }}>
+					{item.name}
+				</CommandButton>
+			);
+		},
+		subMenuProps: {
+			items: themes.map(({ label, value }) => ({
+				key: value,
+				name: label,
+				checked: value === theme,
+				canCheck: true,
+				onClick: () => setTheme(value),
+			})),
+		},
+	},
+	{
+		key: 'bg',
+		name: 'Background',
+		onRender: item => <CommandButton>{item.name}</CommandButton>,
+	},
+];
 
-export interface ToolbarProps {
-	config?: EditorConfig;
-	onChange?: (config: EditorConfig) => any;
+/**
+ * Right side menu bar items
+ */
+const farItems: IContextualMenuItem[] = [
+	{
+		key: 'save-png',
+		name: 'Save PNG',
+		onRender: item => (
+			<CommandButton iconProps={{ iconName: 'Picture' }}>
+				{item.name}
+			</CommandButton>
+		),
+	},
+];
+
+interface ToolbarProps {
+	setTheme: (theme: string) => any;
 }
 
 export default class Toolbar extends React.Component<ToolbarProps> {
 	render() {
-		const { onChange, config, children } = this.props;
+		const { setTheme } = this.props;
 
-		return <div style={style}>{children}</div>;
+		return (
+			<AppContext.Consumer>
+				{config => {
+					return (
+						<CommandBar
+							items={closeItems({ theme: config.editor.theme, setTheme })}
+							farItems={farItems}
+						/>
+					);
+				}}
+			</AppContext.Consumer>
+		);
 	}
 }
