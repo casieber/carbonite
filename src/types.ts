@@ -40,4 +40,4 @@ export type MonacarbonConfig = {
 	 * Padding between the editor and the image top/bottom.
 	 */
 	verticalPadding: number;
-}
+};

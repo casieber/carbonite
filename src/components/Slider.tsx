@@ -34,17 +34,11 @@ export interface SliderProps {
 
 export default class Slider extends React.Component<SliderProps> {
 	render() {
-		const {
-			onChange,
-			...others
-		} = this.props;
+		const { onChange, ...others } = this.props;
 
-		return <input
-			type='range'
-			{...others}
-			onChange={this.handleChange}
-		/>;
+		return <input type="range" {...others} onChange={this.handleChange} />;
 	}
 
-	private handleChange = (e: React.ChangeEvent<HTMLInputElement>) => this.props.onChange(e.target.valueAsNumber)
+	private handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+		this.props.onChange(e.target.valueAsNumber);
 }

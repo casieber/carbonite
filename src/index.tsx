@@ -7,7 +7,7 @@ import App from './components/App';
 import { ROOT_NODE_ID } from './constants';
 
 (self as any).MonacoEnvironment = {
-	getWorkerUrl: function (moduleId: any, label: string) {
+	getWorkerUrl: function(moduleId: any, label: string) {
 		if (label === 'json') {
 			return './json.worker.bundle.js';
 		}
@@ -21,10 +21,7 @@ import { ROOT_NODE_ID } from './constants';
 			return './ts.worker.bundle.js';
 		}
 		return './editor.worker.bundle.js';
-	}
-}
+	},
+};
 
-ReactDOM.render(
-	<App />,
-	document.getElementById(ROOT_NODE_ID),
-);
+ReactDOM.render(<App />, document.getElementById(ROOT_NODE_ID));

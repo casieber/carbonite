@@ -7,7 +7,7 @@ const style: React.CSSProperties = {
 	display: 'flex',
 	flexDirection: 'row',
 	alignItems: 'space-between',
-	padding: '10px'
+	padding: '10px',
 };
 
 export interface ToolbarProps {
@@ -17,14 +17,8 @@ export interface ToolbarProps {
 
 export default class Toolbar extends React.Component<ToolbarProps> {
 	render() {
-		const {
-			onChange,
-			config,
-			children,
-		} = this.props;
+		const { onChange, config, children } = this.props;
 
-		return <div style={style}>
-			{children}
-		</div>
+		return <div style={style}>{children}</div>;
 	}
 }

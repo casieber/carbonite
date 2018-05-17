@@ -6,10 +6,7 @@ export interface ButtonProps extends React.HTMLProps<any> {
 
 export default class Button extends React.Component<ButtonProps> {
 	render() {
-		const {
-			color,
-			...others
-		} = this.props;
+		const { color, ...others } = this.props;
 
 		return <button {...others} />;
 	}

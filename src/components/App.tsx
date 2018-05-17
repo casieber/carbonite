@@ -24,7 +24,11 @@ html, body, #app {
 .monacarbon-editor {
 	padding: 20px;
 	border-radius: 10px;
-	${shadowEnabled ? `box-shadow: 0 ${shadowOffset}px ${shadowSpread}px rgba(0, 0, 0, 0.55);` : ''}
+	${
+		shadowEnabled
+			? `box-shadow: 0 ${shadowOffset}px ${shadowSpread}px rgba(0, 0, 0, 0.55);`
+			: ''
+	}
 	z-index: 1;
 }
 `;
@@ -36,10 +40,13 @@ const appStyles: React.CSSProperties = {
 	justifyContent: 'center',
 	width: '100%',
 	height: '100%',
-	backgroundColor: '#121212'
-}
+	backgroundColor: '#121212',
+};
 
-export default class App extends React.Component<{}, { config: MonacarbonConfig }> {
+export default class App extends React.Component<
+	{},
+	{ config: MonacarbonConfig }
+> {
 	constructor(props: {}) {
 		super(props);
 
@@ -55,13 +62,47 @@ export default class App extends React.Component<{}, { config: MonacarbonConfig 
 			<AppContext.Provider value={config}>
 				<div style={appStyles}>
 					<Toolbar>
-						<BackgroundPicker onChange={color => this.updateConfig('backgroundColor', color)}/>
+						<BackgroundPicker
+							onChange={color => this.updateConfig('backgroundColor', color)}
+						/>
 						<Button onClick={saveImage}>Save PNG</Button>
-						<Toggle label='Drop Shadow' value={config.shadowEnabled} onChange={value => this.updateConfig('shadowEnabled', value)}/>
-						<Slider min={0} max={100} step={10} value={config.shadowOffset} label='Shadow Offset' onChange={value => this.updateConfig('shadowOffset', value)} />
-						<Slider min={0} max={100} step={10} value={config.shadowSpread} label='Shadow Spread' onChange={value => this.updateConfig('shadowSpread', value)} />
-						<Slider min={0} max={200} step={10} value={config.horizontalPadding} label='Horizontal Padding' onChange={value => this.updateConfig('horizontalPadding', value)} />
-						<Slider min={0} max={200} step={10} value={config.verticalPadding} label='Vertical Padding' onChange={value => this.updateConfig('verticalPadding', value)} />
+						<Toggle
+							label="Drop Shadow"
+							value={config.shadowEnabled}
+							onChange={value => this.updateConfig('shadowEnabled', value)}
+						/>
+						<Slider
+							min={0}
+							max={100}
+							step={10}
+							value={config.shadowOffset}
+							label="Shadow Offset"
+							onChange={value => this.updateConfig('shadowOffset', value)}
+						/>
+						<Slider
+							min={0}
+							max={100}
+							step={10}
+							value={config.shadowSpread}
+							label="Shadow Spread"
+							onChange={value => this.updateConfig('shadowSpread', value)}
+						/>
+						<Slider
+							min={0}
+							max={200}
+							step={10}
+							value={config.horizontalPadding}
+							label="Horizontal Padding"
+							onChange={value => this.updateConfig('horizontalPadding', value)}
+						/>
+						<Slider
+							min={0}
+							max={200}
+							step={10}
+							value={config.verticalPadding}
+							label="Vertical Padding"
+							onChange={value => this.updateConfig('verticalPadding', value)}
+						/>
 					</Toolbar>
 					<EditorContainer />
 					<style>{styleEmbed(config)}</style>
@@ -70,7 +111,10 @@ export default class App extends React.Component<{}, { config: MonacarbonConfig 
 		);
 	}
 
-	private updateConfig<K extends keyof MonacarbonConfig>(key: K, value: MonacarbonConfig[K]) {
+	private updateConfig<K extends keyof MonacarbonConfig>(
+		key: K,
+		value: MonacarbonConfig[K],
+	) {
 		this.setState({
 			config: {
 				...this.state.config,

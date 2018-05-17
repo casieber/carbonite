@@ -25,7 +25,10 @@ interface MonacoEditorState {
 	maxLineWidth: number;
 }
 
-export default class MonacoEditor extends React.Component<MonacoEditorProps, MonacoEditorState> {
+export default class MonacoEditor extends React.Component<
+	MonacoEditorProps,
+	MonacoEditorState
+> {
 	private editorRef: React.RefObject<any>;
 	private editor?: monaco.editor.IStandaloneCodeEditor;
 
@@ -42,14 +45,11 @@ export default class MonacoEditor extends React.Component<MonacoEditorProps, Mon
 	}
 
 	componentDidMount() {
-		this.editor = monaco.editor.create(
-			this.editorRef.current,
-			{
-				...this.props.config,
-				value: defaultText,
-				language: 'typescript'
-			}
-		);
+		this.editor = monaco.editor.create(this.editorRef.current, {
+			...this.props.config,
+			value: defaultText,
+			language: 'typescript',
+		});
 
 		this.editor.getModel().onDidChangeContent(this.resizeIfNeeded);
 
@@ -62,21 +62,23 @@ export default class MonacoEditor extends React.Component<MonacoEditorProps, Mon
 			return;
 		}
 
-		const {
-			lineHeight,
-			lineCount,
-			maxLineWidth,
-		} = this.state;
+		const { lineHeight, lineCount, maxLineWidth } = this.state;
 
 		const model = this.editor.getModel();
 		const config = this.editor.getConfiguration();
 
 		// Check for height changes
-		if (lineHeight !== config.lineHeight || lineCount !== model.getLineCount()) {
-			this.setState({
-				lineHeight: config.lineHeight,
-				lineCount: model.getLineCount()
-			}, () => this.editor && this.editor.layout());
+		if (
+			lineHeight !== config.lineHeight ||
+			lineCount !== model.getLineCount()
+		) {
+			this.setState(
+				{
+					lineHeight: config.lineHeight,
+					lineCount: model.getLineCount(),
+				},
+				() => this.editor && this.editor.layout(),
+			);
 		}
 
 		// Check for width changes
@@ -89,18 +91,21 @@ export default class MonacoEditor extends React.Component<MonacoEditorProps, Mon
 		const newMaxLineWidth = config.fontInfo.maxDigitWidth * max + 60;
 
 		if (newMaxLineWidth !== maxLineWidth) {
-			this.setState({
-				maxLineWidth: newMaxLineWidth
-			}, () => this.editor && this.editor.layout());
+			this.setState(
+				{
+					maxLineWidth: newMaxLineWidth,
+				},
+				() => this.editor && this.editor.layout(),
+			);
 		}
-	}
+	};
 
 	render() {
 		const style: React.CSSProperties = {};
 
 		if (this.editor) {
 			const { lineHeight, lineCount, maxLineWidth } = this.state;
-			
+
 			style.height = `${lineHeight * lineCount}px`;
 			style.width = `${maxLineWidth}px`;
 		} else {

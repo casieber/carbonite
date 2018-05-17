@@ -9,7 +9,7 @@ const defaultEditorConfig: EditorConfig = {
 	fontSize: 18,
 	codeLens: false,
 	scrollbar: {
-		vertical: 'hidden'
+		vertical: 'hidden',
 	},
 	folding: false,
 	matchBrackets: false,
@@ -35,8 +35,8 @@ export const defaultConfig: MonacarbonConfig = {
 	shadowSpread: 30,
 	shadowOffset: 10,
 	horizontalPadding: 80,
-	verticalPadding: 60
-}
+	verticalPadding: 60,
+};
 
 const AppContext = createContext(defaultConfig);
 

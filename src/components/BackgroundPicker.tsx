@@ -18,9 +18,12 @@ interface BackgroundPickerState {
 	open: boolean;
 }
 
-export default class BackgroundPicker extends React.Component<BackgroundPickerProps, BackgroundPickerState> {
+export default class BackgroundPicker extends React.Component<
+	BackgroundPickerProps,
+	BackgroundPickerState
+> {
 	state: BackgroundPickerState = {
-		open: false
+		open: false,
 	};
 
 	render() {
@@ -29,12 +32,17 @@ export default class BackgroundPicker extends React.Component<BackgroundPickerPr
 
 		return (
 			<AppContext.Consumer>
-				{value => 
+				{value => (
 					<div>
 						<button onClick={() => this.setState({ open: true })}>BG</button>
-						{open && <SketchPicker color={value.backgroundColor} onChange={({ rgb }) => onChange(rgb)}/>}
+						{open && (
+							<SketchPicker
+								color={value.backgroundColor}
+								onChange={({ rgb }) => onChange(rgb)}
+							/>
+						)}
 					</div>
-				}
+				)}
 			</AppContext.Consumer>
 		);
 	}

@@ -16,14 +16,14 @@ const takeImage = (id: string = CAPTURE_NODE_ID) => {
 			}
 
 			return true;
-		}
+		},
 	};
 
 	return domToImage.toPng(node, config);
-}
+};
 
 export const saveImage = () => {
-	const link = document.createElement('a')
+	const link = document.createElement('a');
 	takeImage().then(url => {
 		link.download = `monacarbon.png`;
 		link.href = url;
