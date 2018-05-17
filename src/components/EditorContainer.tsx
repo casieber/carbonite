@@ -13,9 +13,9 @@ const containerStyles: React.CSSProperties = {
 	position: 'relative',
 }
 
-const innerContainerStyles: React.CSSProperties = {
-	padding: '60px 100px 100px 60px',
-}
+const innerContainerStyles = ({ horizontalPadding, verticalPadding }: any): React.CSSProperties => ({
+	padding: `${verticalPadding}px ${horizontalPadding + 40}px ${verticalPadding + 40}px ${horizontalPadding}px`,
+});
 
 const alphaImage: React.CSSProperties = {
 	position: 'absolute',
@@ -52,9 +52,9 @@ const backgroundLayers: React.CSSProperties = {
 export default class EditorContainer extends React.Component {
 	render() {
 		return <AppContext.Consumer>
-			{({ editor, backgroundColor }) =>
+			{({ editor, backgroundColor, verticalPadding, horizontalPadding }) =>
 				<div style={containerStyles} id={CAPTURE_NODE_ID}>
-					<div style={innerContainerStyles}>
+					<div style={innerContainerStyles({ verticalPadding, horizontalPadding })}>
 						<MonacoEditor config={editor} />
 						<div style={backgroundLayers}>
 							<div style={whiteImage} className={CAPTURE_HIDDEN_CLASSNAME} />

@@ -34,6 +34,8 @@ export const defaultConfig: MonacarbonConfig = {
 	shadowEnabled: true,
 	shadowSpread: 30,
 	shadowOffset: 10,
+	horizontalPadding: 80,
+	verticalPadding: 60
 }
 
 const AppContext = createContext(defaultConfig);
