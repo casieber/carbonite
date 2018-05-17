@@ -1,11 +1,8 @@
 import * as React from 'react';
 
 import MonacoEditor from './MonacoEditor';
-import { EditorConfig } from '../types';
-
-export interface EditorContainerProps {
-	config: EditorConfig;
-}
+import { EditorConfig, Color } from '../types';
+import AppContext from '../context';
 
 const containerStyles: React.CSSProperties = {
 	display: 'flex',
@@ -33,6 +30,16 @@ const whiteImage: React.CSSProperties = {
 	backgroundColor: 'white'
 }
 
+const buildColorStyle = (color: string | Color): React.CSSProperties => ({
+	position: 'absolute',
+	width: '100%',
+	height: '100%',
+	backgroundColor:
+		typeof color === 'string' ? color :
+		color.a ? `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})` :
+		`rgb(${color.r}, ${color.g}, ${color.b})`,
+});
+
 const backgroundLayers: React.CSSProperties = {
 	position: 'absolute',
 	top: 0,
@@ -41,20 +48,21 @@ const backgroundLayers: React.CSSProperties = {
 	right: 0,
 }
 
-export default class EditorContainer extends React.Component<EditorContainerProps> {
+export default class EditorContainer extends React.Component {
 	render() {
-		const { config } = this.props;
-
-		return (
-			<div style={containerStyles} id="container">
-				<div style={innerContainerStyles}>
-					<MonacoEditor config={config} />
-					<div style={backgroundLayers}>
-						<div style={whiteImage} className="eliminateOnSave" />
-						<div style={alphaImage} className="eliminateOnSave" />
+		return <AppContext.Consumer>
+			{({ editor, backgroundColor }) =>
+				<div style={containerStyles} id="container">
+					<div style={innerContainerStyles}>
+						<MonacoEditor config={editor} />
+						<div style={backgroundLayers}>
+							<div style={whiteImage} className="eliminateOnSave" />
+							<div style={alphaImage} className="eliminateOnSave" />
+							<div style={buildColorStyle(backgroundColor)} />
+						</div>
 					</div>
 				</div>
-			</div>
-		);
+			}
+		</AppContext.Consumer>;
 	}
 }

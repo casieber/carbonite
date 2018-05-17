@@ -5,33 +5,8 @@ import EditorContainer from './EditorContainer';
 import Button from './Button';
 import BackgroundPicker from './BackgroundPicker';
 
-import { EditorConfig } from '../types';
-
-const defaultConfig: EditorConfig = {
-	theme: 'vs-dark',
-	lineNumbers: 'off',
-	minimap: { enabled: false },
-	fontSize: 18,
-	codeLens: false,
-	scrollbar: {
-		vertical: 'hidden'
-	},
-	folding: false,
-	matchBrackets: false,
-	renderLineHighlight: 'none',
-	renderIndentGuides: false,
-	quickSuggestions: false,
-	suggestOnTriggerCharacters: false,
-	acceptSuggestionOnEnter: false,
-	selectionHighlight: false,
-	hideCursorInOverviewRuler: true,
-	overviewRulerBorder: false,
-	extraEditorClassName: 'monacarbon-editor',
-	contextmenu: false,
-	scrollBeyondLastLine: false,
-	parameterHints: false,
-	hover: false,
-};
+import AppContext, { defaultConfig } from '../context';
+import { MonacarbonConfig } from '../types';
 
 const styleEmbed = `
 html, body, #app {
@@ -59,23 +34,33 @@ const appStyles: React.CSSProperties = {
 	backgroundColor: '#121212'
 }
 
-export default class App extends React.Component<{}, { config: EditorConfig }> {
+export default class App extends React.Component<{}, { config: MonacarbonConfig }> {
 	constructor(props: {}) {
 		super(props);
 
 		this.state = {
-			config: defaultConfig
+			config: defaultConfig,
 		};
 	}
+
 	render() {
 		const { config } = this.state;
 
-		return <div style={appStyles}>
-			<Toolbar config={config} onChange={config => this.setState({ config })}>
-				<BackgroundPicker />
-			</Toolbar>
-			<EditorContainer config={config} />
-			<style>{styleEmbed}</style>
-		</div>;
+		return (
+			<AppContext.Provider value={config}>
+				<div style={appStyles}>
+					<Toolbar>
+						<BackgroundPicker onChange={color => this.setState({
+							config: {
+								...config,
+								backgroundColor: color
+							}
+						})}/>
+					</Toolbar>
+					<EditorContainer />
+					<style>{styleEmbed}</style>
+				</div>
+			</AppContext.Provider>
+		);
 	}
 }
