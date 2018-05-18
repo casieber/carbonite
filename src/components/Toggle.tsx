@@ -11,7 +11,7 @@ export interface ToggleProps {
 	/**
 	 * The label for the toggle
 	 */
-	label: string;
+	label?: string;
 
 	/**
 	 * Change handler for the toggle

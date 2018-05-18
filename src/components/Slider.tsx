@@ -21,12 +21,12 @@ export interface SliderProps {
 	/**
 	 * The step value for the slider
 	 */
-	step: number;
+	step?: number;
 
 	/**
 	 * The label for the sliders
 	 */
-	label: string;
+	label?: string;
 
 	/**
 	 * Change handler for the slider

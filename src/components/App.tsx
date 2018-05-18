@@ -65,51 +65,8 @@ export default class App extends React.Component<
 					<Fabric>
 						<Toolbar
 							setTheme={theme => this.updateEditorConfig('theme', theme)}
-						>
-							<BackgroundPicker
-								onChange={color => this.updateConfig('backgroundColor', color)}
-							/>
-							<Button onClick={saveImage}>Save PNG</Button>
-							<Toggle
-								label="Drop Shadow"
-								value={config.shadowEnabled}
-								onChange={value => this.updateConfig('shadowEnabled', value)}
-							/>
-							<Slider
-								min={0}
-								max={100}
-								step={10}
-								value={config.shadowOffset}
-								label="Shadow Offset"
-								onChange={value => this.updateConfig('shadowOffset', value)}
-							/>
-							<Slider
-								min={0}
-								max={100}
-								step={10}
-								value={config.shadowSpread}
-								label="Shadow Spread"
-								onChange={value => this.updateConfig('shadowSpread', value)}
-							/>
-							<Slider
-								min={0}
-								max={200}
-								step={10}
-								value={config.horizontalPadding}
-								label="Horizontal Padding"
-								onChange={value =>
-									this.updateConfig('horizontalPadding', value)
-								}
-							/>
-							<Slider
-								min={0}
-								max={200}
-								step={10}
-								value={config.verticalPadding}
-								label="Vertical Padding"
-								onChange={value => this.updateConfig('verticalPadding', value)}
-							/>
-						</Toolbar>
+							update={(key, value) => this.updateConfig(key, value)}
+						/>
 						<EditorContainer />
 						<style>{styleEmbed(config)}</style>
 					</Fabric>

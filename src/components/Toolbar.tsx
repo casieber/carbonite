@@ -3,15 +3,30 @@ import {
 	CommandBar,
 	IContextualMenuItem,
 	CommandButton,
+	ContextualMenuItem,
+	Label,
 } from 'office-ui-fabric-react';
 
 import themes from '../themes';
 import AppContext from '../context';
 
+import Slider from './Slider';
+import Toggle from './Toggle';
+import { MonacarbonConfig } from '../types';
+
 /**
  * Left side menu bar items
  */
-const closeItems = ({ theme, setTheme }: any): IContextualMenuItem[] => [
+const closeItems = ({
+	theme,
+	horizontalPadding,
+	verticalPadding,
+	update,
+	setTheme,
+	shadowEnabled,
+	shadowOffset,
+	shadowSpread,
+}: any): IContextualMenuItem[] => [
 	{
 		key: 'theme',
 		name: 'Theme',
@@ -35,7 +50,102 @@ const closeItems = ({ theme, setTheme }: any): IContextualMenuItem[] => [
 	{
 		key: 'bg',
 		name: 'Background',
-		onRender: item => <CommandButton>{item.name}</CommandButton>,
+		onRender: item => (
+			<CommandButton onClick={e => console.log('inner')}>
+				{item.name}
+			</CommandButton>
+		),
+	},
+	{
+		key: 'settings',
+		name: 'Settings',
+		onRender: item => (
+			<CommandButton menuProps={{ items: item.subMenuProps.items }}>
+				{item.name}
+			</CommandButton>
+		),
+		subMenuProps: {
+			items: [
+				{
+					key: 'padding-v-title',
+					name: 'Padding (vertical)',
+					onClick: e => e && e.preventDefault(),
+				},
+				{
+					key: 'padding-v-slider',
+					onRender: item => (
+						<Slider
+							min={0}
+							max={200}
+							value={verticalPadding}
+							onChange={value => update('verticalPadding', value)}
+						/>
+					),
+				},
+				{
+					key: 'padding-h-title',
+					name: 'Padding (horizontal)',
+					onClick: e => e && e.preventDefault(),
+				},
+				{
+					key: 'padding-h-slider',
+					onRender: item => (
+						<Slider
+							min={0}
+							max={200}
+							value={horizontalPadding}
+							onChange={value => update('horizontalPadding', value)}
+						/>
+					),
+				},
+				{
+					key: 'shadown-enabled-title',
+					name: 'Shadow Enabled',
+					onClick: e => e && e.preventDefault(),
+				},
+				{
+					key: 'shadow-enabled-toggle',
+					onRender: item => (
+						<Toggle
+							value={shadowEnabled}
+							onChange={value => update('shadowEnabled', value)}
+						/>
+					),
+				},
+				{
+					key: 'shadown-offset-title',
+					name: 'Shadow Offset',
+					onClick: e => e && e.preventDefault(),
+				},
+				{
+					key: 'shadow-offset-slider',
+					onRender: item => (
+						<Slider
+							min={0}
+							max={100}
+							value={shadowOffset}
+							onChange={value => update('shadowOffset', value)}
+						/>
+					),
+				},
+				{
+					key: 'shadown-spread-title',
+					name: 'Shadow Spread',
+					onClick: e => e && e.preventDefault(),
+				},
+				{
+					key: 'shadow-spread-slider',
+					onRender: item => (
+						<Slider
+							min={0}
+							max={100}
+							value={shadowSpread}
+							onChange={value => update('shadowSpread', value)}
+						/>
+					),
+				},
+			],
+		},
 	},
 ];
 
@@ -56,18 +166,40 @@ const farItems: IContextualMenuItem[] = [
 
 interface ToolbarProps {
 	setTheme: (theme: string) => any;
+	update: <K extends keyof MonacarbonConfig>(
+		key: K,
+		value: MonacarbonConfig[K],
+	) => any;
 }
 
 export default class Toolbar extends React.Component<ToolbarProps> {
 	render() {
-		const { setTheme } = this.props;
+		const { setTheme, update } = this.props;
 
 		return (
 			<AppContext.Consumer>
 				{config => {
+					const {
+						editor: { theme },
+						verticalPadding,
+						horizontalPadding,
+						shadowEnabled,
+						shadowOffset,
+						shadowSpread,
+					} = config;
+
 					return (
 						<CommandBar
-							items={closeItems({ theme: config.editor.theme, setTheme })}
+							items={closeItems({
+								verticalPadding,
+								horizontalPadding,
+								theme,
+								update,
+								setTheme,
+								shadowEnabled,
+								shadowOffset,
+								shadowSpread,
+							})}
 							farItems={farItems}
 						/>
 					);

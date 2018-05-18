@@ -11,9 +11,7 @@ interface BackgroundPickerProps {
 	 * Called when the color changes.
 	 */
 	onChange: (color: Color) => any;
-}
 
-interface BackgroundPickerState {
 	/**
 	 * Whether or not the color picker is open.
 	 */
@@ -21,24 +19,15 @@ interface BackgroundPickerState {
 }
 
 export default class BackgroundPicker extends React.Component<
-	BackgroundPickerProps,
-	BackgroundPickerState
+	BackgroundPickerProps
 > {
-	state: BackgroundPickerState = {
-		open: false,
-	};
-
 	render() {
-		const { onChange } = this.props;
-		const { open } = this.state;
+		const { onChange, open } = this.props;
 
 		return (
 			<AppContext.Consumer>
 				{value => (
 					<div>
-						<Button onClick={() => this.setState({ open: true })}>
-							Change Background
-						</Button>
 						{open && (
 							<div style={{ position: 'absolute', zIndex: 5 }}>
 								<SketchPicker
