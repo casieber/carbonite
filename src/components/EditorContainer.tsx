@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import MonacoEditor from './MonacoEditor';
-import { EditorConfig, Color } from '../types';
+import { Color } from '../types';
 import AppContext from '../context';
 import { CAPTURE_NODE_ID, CAPTURE_HIDDEN_CLASSNAME } from '../constants';
 

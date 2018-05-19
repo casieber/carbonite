@@ -5,7 +5,11 @@
         "sourceMap": true,
         "strict": true,
         "jsx": "react",
-        "target": "es6"
+        "target": "es6",
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noImplicitThis": true,
+        "noImplicitReturns": true
     },
     "exclude": [
         "node_modules"

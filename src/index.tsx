@@ -1,4 +1,3 @@
-import * as monaco from 'monaco-editor';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { initializeIcons } from '@uifabric/icons';
@@ -10,7 +9,7 @@ import { ROOT_NODE_ID } from './constants';
 initializeIcons();
 
 (self as any).MonacoEnvironment = {
-	getWorkerUrl: function(moduleId: any, label: string) {
+	getWorkerUrl: function(_: any, label: string) {
 		if (label === 'json') {
 			return './json.worker.bundle.js';
 		}

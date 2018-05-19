@@ -66,7 +66,7 @@ export default class MonacoEditor extends React.Component<
 		}
 	}
 
-	resizeIfNeeded = (evt?: monaco.editor.IModelContentChangedEvent) => {
+	resizeIfNeeded = () => {
 		if (!this.editor) {
 			// Without an editor, there is nothing to resize
 			return;

@@ -3,16 +3,9 @@ import { Fabric } from 'office-ui-fabric-react';
 
 import Toolbar from './Toolbar';
 import EditorContainer from './EditorContainer';
-import Button from './Button';
-import BackgroundPicker from './BackgroundPicker';
 
 import AppContext, { defaultConfig } from '../context';
 import { MonacarbonConfig } from '../types';
-
-import { saveImage } from '../actions';
-
-import Slider from './Slider';
-import Toggle from './Toggle';
 
 const styleEmbed = ({ shadowEnabled, shadowOffset, shadowSpread }: any) => `
 html, body, #app {

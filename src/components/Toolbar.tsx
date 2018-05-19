@@ -3,8 +3,6 @@ import {
 	CommandBar,
 	IContextualMenuItem,
 	CommandButton,
-	ContextualMenuItem,
-	Label,
 } from 'office-ui-fabric-react';
 
 import themes from '../themes';
@@ -51,7 +49,7 @@ const closeItems = ({
 	{
 		key: 'bg',
 		name: 'Background',
-		onRender: item => (
+		onRender: () => (
 			<BackgroundPicker onChange={color => update('backgroundColor', color)} />
 		),
 	},
@@ -72,7 +70,7 @@ const closeItems = ({
 				},
 				{
 					key: 'padding-v-slider',
-					onRender: item => (
+					onRender: () => (
 						<Slider
 							min={0}
 							max={200}
@@ -88,7 +86,7 @@ const closeItems = ({
 				},
 				{
 					key: 'padding-h-slider',
-					onRender: item => (
+					onRender: () => (
 						<Slider
 							min={0}
 							max={200}
@@ -104,7 +102,7 @@ const closeItems = ({
 				},
 				{
 					key: 'shadow-enabled-toggle',
-					onRender: item => (
+					onRender: () => (
 						<Toggle
 							value={shadowEnabled}
 							onChange={value => update('shadowEnabled', value)}
@@ -118,7 +116,7 @@ const closeItems = ({
 				},
 				{
 					key: 'shadow-offset-slider',
-					onRender: item => (
+					onRender: () => (
 						<Slider
 							min={0}
 							max={100}
@@ -134,7 +132,7 @@ const closeItems = ({
 				},
 				{
 					key: 'shadow-spread-slider',
-					onRender: item => (
+					onRender: () => (
 						<Slider
 							min={0}
 							max={100}
