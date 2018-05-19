@@ -13,6 +13,8 @@ import Toggle from './Toggle';
 import BackgroundPicker from './BackgroundPicker';
 import { MonacarbonConfig } from '../types';
 
+import { saveImage } from '../actions';
+
 /**
  * Left side menu bar items
  */
@@ -154,7 +156,7 @@ const farItems: IContextualMenuItem[] = [
 		key: 'save-png',
 		name: 'Save PNG',
 		onRender: item => (
-			<CommandButton iconProps={{ iconName: 'Picture' }}>
+			<CommandButton iconProps={{ iconName: 'Picture' }} onClick={saveImage}>
 				{item.name}
 			</CommandButton>
 		),
