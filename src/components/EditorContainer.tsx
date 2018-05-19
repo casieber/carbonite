@@ -43,7 +43,7 @@ const buildColorStyle = (color: string | Color): React.CSSProperties => ({
 	backgroundColor:
 		typeof color === 'string'
 			? color
-			: color.a
+			: color.a === undefined
 				? `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`
 				: `rgb(${color.r}, ${color.g}, ${color.b})`,
 });
