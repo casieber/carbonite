@@ -11,7 +11,7 @@ import AppContext from '../context';
 import Slider from './Slider';
 import Toggle from './Toggle';
 import BackgroundPicker from './BackgroundPicker';
-import { MonacarbonConfig } from '../types';
+import { Config } from '../types';
 
 import { saveImage } from '../actions';
 
@@ -164,27 +164,23 @@ const farItems: IContextualMenuItem[] = [
 ];
 
 interface ToolbarProps {
-	setTheme: (theme: string) => any;
-	update: <K extends keyof MonacarbonConfig>(
-		key: K,
-		value: MonacarbonConfig[K],
-	) => any;
+	update: <K extends keyof Config>(key: K, value: Config[K]) => any;
 }
 
 export default class Toolbar extends React.Component<ToolbarProps> {
 	render() {
-		const { setTheme, update } = this.props;
+		const { update } = this.props;
 
 		return (
 			<AppContext.Consumer>
 				{config => {
 					const {
-						editor: { theme },
 						verticalPadding,
 						horizontalPadding,
 						shadowEnabled,
 						shadowOffset,
 						shadowSpread,
+						theme,
 					} = config;
 
 					return (
@@ -194,7 +190,6 @@ export default class Toolbar extends React.Component<ToolbarProps> {
 								horizontalPadding,
 								theme,
 								update,
-								setTheme,
 								shadowEnabled,
 								shadowOffset,
 								shadowSpread,

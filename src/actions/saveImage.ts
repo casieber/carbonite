@@ -25,7 +25,7 @@ const takeImage = (id: string = CAPTURE_NODE_ID) => {
 export const saveImage = () => {
 	const link = document.createElement('a');
 	takeImage().then(url => {
-		link.download = `monacarbon.png`;
+		link.download = `carbonite.png`;
 		link.href = url;
 		document.body.appendChild(link);
 		link.click();

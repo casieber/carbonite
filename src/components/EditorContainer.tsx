@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import MonacoEditor from './MonacoEditor';
+import CodeMirrorEditor from './CodeMirrorEditor';
 import { Color } from '../types';
 import AppContext from '../context';
 import { CAPTURE_NODE_ID, CAPTURE_HIDDEN_CLASSNAME } from '../constants';
@@ -60,7 +60,7 @@ export default class EditorContainer extends React.Component {
 	render() {
 		return (
 			<AppContext.Consumer>
-				{({ editor, backgroundColor, verticalPadding, horizontalPadding }) => (
+				{({ backgroundColor, verticalPadding, horizontalPadding }) => (
 					<div style={containerStyles} id={CAPTURE_NODE_ID}>
 						<div
 							style={innerContainerStyles({
@@ -73,7 +73,7 @@ export default class EditorContainer extends React.Component {
 								<div style={alphaImage} className={CAPTURE_HIDDEN_CLASSNAME} />
 								<div style={buildColorStyle(backgroundColor)} />
 							</div>
-							<MonacoEditor config={editor} />
+							<CodeMirrorEditor />
 						</div>
 					</div>
 				)}

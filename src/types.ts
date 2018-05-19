@@ -1,20 +1,12 @@
-import * as monaco from 'monaco-editor';
 import { RGBColor } from 'react-color';
-
-export type EditorConfig = monaco.editor.IEditorConstructionOptions;
 
 export type Color = RGBColor;
 
-export type MonacarbonConfig = {
+export type Config = {
 	/**
 	 * Background color for the image.
 	 */
 	backgroundColor: string | Color;
-
-	/**
-	 * Configuration settings for the editor.
-	 */
-	editor: EditorConfig;
 
 	/**
 	 * Whether or not a drop shadow is enabled.
@@ -40,4 +32,9 @@ export type MonacarbonConfig = {
 	 * Padding between the editor and the image top/bottom.
 	 */
 	verticalPadding: number;
+
+	/**
+	 * The current active editor theme.
+	 */
+	theme: string;
 };

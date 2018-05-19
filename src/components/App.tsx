@@ -5,7 +5,7 @@ import Toolbar from './Toolbar';
 import EditorContainer from './EditorContainer';
 
 import AppContext, { defaultConfig } from '../context';
-import { MonacarbonConfig } from '../types';
+import { Config } from '../types';
 
 const styleEmbed = ({ shadowEnabled, shadowOffset, shadowSpread }: any) => `
 html, body, #app {
@@ -15,7 +15,7 @@ html, body, #app {
 	margin: 0;
 }
 
-.monacarbon-editor {
+.CodeMirror {
 	padding: 20px;
 	border-radius: 10px;
 	${
@@ -23,6 +23,18 @@ html, body, #app {
 			? `box-shadow: 0 ${shadowOffset}px ${shadowSpread}px rgba(0, 0, 0, 0.55);`
 			: ''
 	}
+}
+
+.CodeMirror {
+	height: auto;
+}
+
+.CodeMirror-scroll {
+	overflow: hidden !important;
+}
+
+.CodeMirror-container {
+	font-size: 20px;
 }
 `;
 
@@ -36,10 +48,7 @@ const appStyles: React.CSSProperties = {
 	backgroundColor: '#121212',
 };
 
-export default class App extends React.Component<
-	{},
-	{ config: MonacarbonConfig }
-> {
+export default class App extends React.Component<{}, { config: Config }> {
 	constructor(props: {}) {
 		super(props);
 
@@ -55,10 +64,7 @@ export default class App extends React.Component<
 			<AppContext.Provider value={config}>
 				<div style={appStyles}>
 					<Fabric>
-						<Toolbar
-							setTheme={theme => this.updateEditorConfig('theme', theme)}
-							update={(key, value) => this.updateConfig(key, value)}
-						/>
+						<Toolbar update={(key, value) => this.updateConfig(key, value)} />
 						<EditorContainer />
 						<style>{styleEmbed(config)}</style>
 					</Fabric>
@@ -67,25 +73,12 @@ export default class App extends React.Component<
 		);
 	}
 
-	private updateConfig<K extends keyof MonacarbonConfig>(
-		key: K,
-		value: MonacarbonConfig[K],
-	) {
+	private updateConfig<K extends keyof Config>(key: K, value: Config[K]) {
 		this.setState({
 			config: {
 				...this.state.config,
 				[key]: value,
 			},
-		});
-	}
-
-	private updateEditorConfig<K extends keyof MonacarbonConfig['editor']>(
-		key: K,
-		value: MonacarbonConfig['editor'][K],
-	) {
-		this.updateConfig('editor', {
-			...this.state.config.editor,
-			[key]: value,
 		});
 	}
 }
