@@ -68,12 +68,12 @@ export default class EditorContainer extends React.Component {
 								horizontalPadding,
 							})}
 						>
-							<MonacoEditor config={editor} />
 							<div style={backgroundLayers}>
 								<div style={whiteImage} className={CAPTURE_HIDDEN_CLASSNAME} />
 								<div style={alphaImage} className={CAPTURE_HIDDEN_CLASSNAME} />
 								<div style={buildColorStyle(backgroundColor)} />
 							</div>
+							<MonacoEditor config={editor} />
 						</div>
 					</div>
 				)}

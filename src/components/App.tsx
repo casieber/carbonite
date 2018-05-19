@@ -30,7 +30,6 @@ html, body, #app {
 			? `box-shadow: 0 ${shadowOffset}px ${shadowSpread}px rgba(0, 0, 0, 0.55);`
 			: ''
 	}
-	z-index: 1;
 }
 `;
 

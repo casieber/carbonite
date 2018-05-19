@@ -1,44 +1,64 @@
 import * as React from 'react';
 import { SketchPicker } from 'react-color';
+import { CommandButton, Callout } from 'office-ui-fabric-react';
+
 import { Color } from '../types';
 
 import AppContext from '../context';
-
-import Button from './Button';
 
 interface BackgroundPickerProps {
 	/**
 	 * Called when the color changes.
 	 */
 	onChange: (color: Color) => any;
+}
 
+interface BackgroundPickerState {
 	/**
-	 * Whether or not the color picker is open.
+	 * Whether or not the picker is open
 	 */
 	open: boolean;
 }
 
 export default class BackgroundPicker extends React.Component<
-	BackgroundPickerProps
+	BackgroundPickerProps,
+	BackgroundPickerState
 > {
+	state: BackgroundPickerState = {
+		open: false,
+	};
+
+	buttonRef = React.createRef<any>();
+
 	render() {
-		const { onChange, open } = this.props;
+		const { onChange } = this.props;
+		const { open } = this.state;
 
 		return (
-			<AppContext.Consumer>
-				{value => (
-					<div>
-						{open && (
-							<div style={{ position: 'absolute', zIndex: 5 }}>
+			<React.Fragment>
+				<div ref={this.buttonRef}>
+					<CommandButton onClick={this.showPicker}>Background</CommandButton>
+				</div>
+				<AppContext.Consumer>
+					{value =>
+						open && (
+							<Callout
+								onDismiss={this.hidePicker}
+								target={this.buttonRef.current}
+							>
 								<SketchPicker
 									color={value.backgroundColor}
 									onChange={({ rgb }) => onChange(rgb)}
 								/>
-							</div>
-						)}
-					</div>
-				)}
-			</AppContext.Consumer>
+							</Callout>
+						)
+					}
+				</AppContext.Consumer>
+			</React.Fragment>
 		);
 	}
+
+	private showPicker = () => this.setState({ open: true });
+
+	private hidePicker = () => this.setState({ open: false });
 }

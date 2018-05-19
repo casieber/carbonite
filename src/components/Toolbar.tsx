@@ -12,6 +12,7 @@ import AppContext from '../context';
 
 import Slider from './Slider';
 import Toggle from './Toggle';
+import BackgroundPicker from './BackgroundPicker';
 import { MonacarbonConfig } from '../types';
 
 /**
@@ -51,9 +52,7 @@ const closeItems = ({
 		key: 'bg',
 		name: 'Background',
 		onRender: item => (
-			<CommandButton onClick={e => console.log('inner')}>
-				{item.name}
-			</CommandButton>
+			<BackgroundPicker onChange={color => update('backgroundColor', color)} />
 		),
 	},
 	{
