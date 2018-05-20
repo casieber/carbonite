@@ -4,7 +4,7 @@ import { Config } from './types';
 
 export const defaultConfig: Config = {
 	backgroundColor: '#F5A623',
-	theme: 'monokai',
+	theme: 'seti',
 	shadowEnabled: true,
 	shadowSpread: 30,
 	shadowOffset: 10,
