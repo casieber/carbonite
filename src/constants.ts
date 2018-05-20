@@ -238,3 +238,298 @@ export const themeList = [
 ];
 
 export const themes = toIdMap(themeList);
+
+/**
+ * Supported languages
+ */
+export const languageList = [
+	{
+		id: 'Apache',
+		mode: 'apache',
+		mime: 'text/apache',
+		custom: true,
+	},
+	{
+		id: 'Bash',
+		mode: 'shell',
+		mime: 'application/x-sh',
+	},
+	{
+		id: 'Plain Text',
+		mode: 'text',
+	},
+	{
+		id: 'C',
+		mode: 'clike',
+		mime: 'text/x-csrc',
+		short: 'c',
+	},
+	{
+		id: 'C++',
+		mode: 'clike',
+		mime: 'text/x-c++src',
+		short: 'cpp',
+	},
+	{
+		id: 'C#',
+		mode: 'clike',
+		mime: 'text/x-csharp',
+		short: 'cs',
+	},
+	{
+		id: 'Clojure',
+		mode: 'clojure',
+	},
+	{
+		id: 'Cobol',
+		mode: 'cobol',
+	},
+	{
+		id: 'CoffeeScript',
+		mode: 'coffeescript',
+	},
+	{
+		id: 'Crystal',
+		mode: 'crystal',
+	},
+	{
+		id: 'CSS',
+		mode: 'css',
+	},
+	{
+		id: 'D',
+		mode: 'd',
+	},
+	{
+		id: 'Dart',
+		mode: 'dart',
+	},
+	{
+		id: 'Diff',
+		mode: 'diff',
+		mime: 'text/x-diff',
+	},
+	{
+		id: 'Django',
+		mode: 'django',
+	},
+	{
+		id: 'Docker',
+		mode: 'dockerfile',
+	},
+	{
+		id: 'Elixir',
+		mode: 'elixir',
+		custom: true,
+	},
+	{
+		id: 'Elm',
+		mode: 'elm',
+	},
+	{
+		id: 'Erlang',
+		mode: 'erlang',
+	},
+	{
+		id: 'Fortran',
+		mode: 'fortran',
+	},
+	{
+		id: 'F# / OCaml',
+		mode: 'mllike',
+	},
+	{
+		id: 'GraphQL',
+		mode: 'graphql',
+		custom: true,
+	},
+	{
+		id: 'Go',
+		mode: 'go',
+	},
+	{
+		id: 'Groovy',
+		mode: 'groovy',
+	},
+	{
+		id: 'Handlebars',
+		mode: 'handlebars',
+	},
+	{
+		id: 'Haskell',
+		mode: 'haskell',
+	},
+	{
+		id: 'Haxe',
+		mode: 'haxe',
+	},
+	{
+		id: 'HTML',
+		mode: 'htmlmixed',
+	},
+	{
+		id: 'Java',
+		mode: 'clike',
+		mime: 'text/x-java',
+		short: 'java',
+	},
+	{
+		id: 'JavaScript',
+		mode: 'javascript',
+		short: 'javascript',
+	},
+	{
+		id: 'JSON',
+		mode: 'javascript',
+		mime: 'application/json',
+		short: 'json',
+	},
+	{
+		id: 'JSX',
+		mode: 'jsx',
+	},
+	{
+		id: 'Julia',
+		mode: 'julia',
+	},
+	{
+		id: 'Kotlin',
+		mode: 'clike',
+		mime: 'text/x-kotlin',
+		short: 'kotlin',
+	},
+	{
+		id: 'Lisp',
+		mode: 'commonlisp',
+	},
+	{
+		id: 'Lua',
+		mode: 'lua',
+	},
+	{
+		id: 'Markdown',
+		mode: 'markdown',
+	},
+	{
+		id: 'Mathematica',
+		mode: 'mathematica',
+	},
+	{
+		id: 'MySQL',
+		mode: 'sql',
+		mime: 'text/x-mysql',
+		short: 'mysql',
+	},
+	{
+		id: 'NGINX',
+		mode: 'nginx',
+	},
+	{
+		id: 'Nim',
+		mode: 'nimrod',
+		custom: true,
+	},
+	{
+		id: 'Objective C',
+		mode: 'clike',
+		mime: 'text/x-objectivec',
+		short: 'objectivec',
+	},
+	{
+		id: 'Pascal',
+		mode: 'pascal',
+	},
+	{
+		id: 'Perl',
+		mode: 'perl',
+	},
+	{
+		id: 'PHP',
+		mode: 'php',
+		mime: 'text/x-php',
+		short: 'php',
+	},
+	{
+		id: 'PowerShell',
+		mode: 'powershell',
+	},
+	{
+		id: 'Python',
+		mode: 'python',
+	},
+	{
+		id: 'R',
+		mode: 'r',
+	},
+	{
+		id: 'Ruby',
+		mode: 'ruby',
+	},
+	{
+		id: 'Rust',
+		mode: 'rust',
+	},
+	{
+		id: 'Sass',
+		mode: 'sass',
+	},
+	{
+		id: 'Scala',
+		mode: 'clike',
+		mime: 'text/x-scala',
+		short: 'scala',
+	},
+	{
+		id: 'Smalltalk',
+		mode: 'smalltalk',
+	},
+	{
+		id: 'SQL',
+		mode: 'sql',
+	},
+	{
+		id: 'Stylus',
+		mode: 'stylus',
+		mime: 'stylus',
+	},
+	{
+		id: 'Swift',
+		mode: 'swift',
+	},
+	{
+		id: 'TCL',
+		mode: 'tcl',
+	},
+	{
+		id: 'TypeScript',
+		mode: 'javascript',
+		mime: 'application/typescript',
+		short: 'typescript',
+	},
+	{
+		id: 'VB.NET',
+		mode: 'vb',
+	},
+	{
+		id: 'Verilog',
+		mode: 'verilog',
+	},
+	{
+		id: 'VHDL',
+		mode: 'vhdl',
+	},
+	{
+		id: 'Vue',
+		mode: 'vue',
+	},
+	{
+		id: 'XML',
+		mode: 'xml',
+	},
+	{
+		id: 'YAML',
+		mode: 'yaml',
+	},
+];
+
+export const languages = toIdMap(languageList);

@@ -10,6 +10,7 @@ export const defaultConfig: Config = {
 	shadowOffset: 15,
 	horizontalPadding: 80,
 	verticalPadding: 80,
+	language: 'TypeScript',
 };
 
 const AppContext = createContext(defaultConfig);

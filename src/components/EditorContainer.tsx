@@ -59,7 +59,13 @@ export default class EditorContainer extends React.Component {
 	render() {
 		return (
 			<AppContext.Consumer>
-				{({ backgroundColor, verticalPadding, horizontalPadding, theme }) => (
+				{({
+					backgroundColor,
+					verticalPadding,
+					horizontalPadding,
+					theme,
+					language,
+				}) => (
 					<div style={containerStyles} id={CAPTURE_NODE_ID}>
 						<div
 							style={innerContainerStyles({
@@ -72,7 +78,7 @@ export default class EditorContainer extends React.Component {
 								<div style={alphaImage} className={CAPTURE_HIDDEN_CLASSNAME} />
 								<div style={buildColorStyle(backgroundColor)} />
 							</div>
-							<CodeMirrorEditor theme={theme} />
+							<CodeMirrorEditor theme={theme} language={language} />
 						</div>
 					</div>
 				)}

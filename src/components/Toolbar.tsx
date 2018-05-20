@@ -5,7 +5,7 @@ import {
 	CommandButton,
 } from 'office-ui-fabric-react';
 
-import { themeList } from '../constants';
+import { themeList, languageList } from '../constants';
 import AppContext from '../context';
 
 import Slider from './Slider';
@@ -20,6 +20,7 @@ import { saveImage } from '../actions';
  */
 const closeItems = ({
 	theme,
+	language,
 	horizontalPadding,
 	verticalPadding,
 	update,
@@ -44,6 +45,26 @@ const closeItems = ({
 				checked: id === theme,
 				canCheck: true,
 				onClick: () => update('theme', id),
+			})),
+		},
+	},
+	{
+		key: 'language',
+		name: 'Language',
+		onRender: item => {
+			return (
+				<CommandButton menuProps={{ items: item.subMenuProps.items }}>
+					{item.name}
+				</CommandButton>
+			);
+		},
+		subMenuProps: {
+			items: languageList.map(({ id }) => ({
+				key: id,
+				name: id,
+				checked: id === language,
+				canCheck: true,
+				onClick: () => update('language', id),
 			})),
 		},
 	},
@@ -180,6 +201,7 @@ export default class Toolbar extends React.Component<ToolbarProps> {
 						shadowOffset,
 						shadowSpread,
 						theme,
+						language,
 					} = config;
 
 					return (
@@ -192,6 +214,7 @@ export default class Toolbar extends React.Component<ToolbarProps> {
 								shadowEnabled,
 								shadowOffset,
 								shadowSpread,
+								language,
 							})}
 							farItems={farItems}
 						/>

@@ -37,4 +37,9 @@ export type Config = {
 	 * The current active editor theme.
 	 */
 	theme: string;
+
+	/**
+	 * The current active editor language.
+	 */
+	language: string;
 };

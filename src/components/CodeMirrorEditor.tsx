@@ -6,15 +6,23 @@ import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/monokai.css';
 import 'codemirror/mode/javascript/javascript';
 
-import { themes } from '../constants';
+import { themes, languages } from '../constants';
 
 // Load the theme css
 Object.keys(themes).forEach(id => {
 	require(`codemirror/theme/${id}.css`);
 });
 
+const languageToMode = (languageId: string) => {
+	const { id, mode, ...others } = languages[languageId];
+
+	require(`codemirror/mode/${mode}/${mode}`);
+
+	return Object.keys(others).length > 0 ? { name: mode, ...others } : mode;
+};
+
 export default class CodeMirrorEditor extends React.Component<
-	{ theme: string },
+	{ theme: string; language: string },
 	{ value: string }
 > {
 	state = {
@@ -22,10 +30,10 @@ export default class CodeMirrorEditor extends React.Component<
 	};
 
 	render() {
-		const { theme } = this.props;
+		const { theme, language } = this.props;
 
 		const options = {
-			mode: { name: 'javascript', typescript: true },
+			mode: languageToMode(language),
 			theme,
 			lineNumbers: false,
 			scrollBarStyle: null,
