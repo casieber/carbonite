@@ -4,8 +4,9 @@ import { Fabric } from 'office-ui-fabric-react';
 import Toolbar from './Toolbar';
 import EditorContainer from './EditorContainer';
 
-import AppContext, { defaultConfig } from '../context';
+import AppContext from '../context';
 import { Config } from '../types';
+import { defaultConfig } from '../constants';
 
 const styleEmbed = ({ shadowEnabled, shadowOffset, shadowSpread }: any) => `
 html, body, #app {
