@@ -6,7 +6,7 @@ import EditorContainer from './EditorContainer';
 
 import AppContext from '../context';
 import { Config } from '../types';
-import { defaultConfig } from '../constants';
+import { configFromQuery } from '../util/configFromQuery';
 
 const styleEmbed = ({ shadowEnabled, shadowOffset, shadowSpread }: any) => `
 html, body, #app {
@@ -49,12 +49,14 @@ const appStyles: React.CSSProperties = {
 	backgroundColor: '#121212',
 };
 
+const config = configFromQuery();
+
 export default class App extends React.Component<{}, { config: Config }> {
 	constructor(props: {}) {
 		super(props);
 
 		this.state = {
-			config: defaultConfig,
+			config,
 		};
 	}
 

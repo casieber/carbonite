@@ -13,7 +13,7 @@ import Toggle from './Toggle';
 import BackgroundPicker from './BackgroundPicker';
 import { Config } from '../types';
 
-import { saveImage } from '../actions';
+import { insertImage } from '../actions';
 
 /**
  * Left side menu bar items
@@ -171,12 +171,15 @@ const closeItems = ({
 /**
  * Right side menu bar items
  */
-const farItems: IContextualMenuItem[] = [
+const farItems = (config: Config): IContextualMenuItem[] => [
 	{
 		key: 'save-png',
 		name: 'Save PNG',
 		onRender: item => (
-			<CommandButton iconProps={{ iconName: 'Picture' }} onClick={saveImage}>
+			<CommandButton
+				iconProps={{ iconName: 'Picture' }}
+				onClick={() => insertImage(config)}
+			>
 				{item.name}
 			</CommandButton>
 		),
@@ -216,7 +219,7 @@ export default class Toolbar extends React.Component<ToolbarProps> {
 								shadowSpread,
 								language,
 							})}
-							farItems={farItems}
+							farItems={farItems(config)}
 						/>
 					);
 				}}

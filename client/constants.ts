@@ -1,4 +1,4 @@
-import { toIdMap } from './util';
+import { toIdMap } from './util/toIdMap';
 import { Config } from './types';
 
 /**

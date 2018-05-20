@@ -4,7 +4,7 @@ const webpack = require('webpack');
 module.exports = {
 	mode: 'development',
 	entry: {
-		app: './src/index.tsx',
+		app: './client/index.tsx',
 	},
 	output: {
 		globalObject: 'self',
@@ -36,5 +36,6 @@ module.exports = {
 	devServer: {
 		port: 3000,
 		contentBase: path.join(__dirname, 'dist'),
+		https: true,
 	},
 };
