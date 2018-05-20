@@ -5,7 +5,7 @@ import {
 	CommandButton,
 } from 'office-ui-fabric-react';
 
-import themes from '../themes';
+import { themeList } from '../constants';
 import AppContext from '../context';
 
 import Slider from './Slider';
@@ -23,7 +23,6 @@ const closeItems = ({
 	horizontalPadding,
 	verticalPadding,
 	update,
-	setTheme,
 	shadowEnabled,
 	shadowOffset,
 	shadowSpread,
@@ -39,12 +38,12 @@ const closeItems = ({
 			);
 		},
 		subMenuProps: {
-			items: themes.map(({ label, value }) => ({
-				key: value,
-				name: label,
-				checked: value === theme,
+			items: themeList.map(({ id, name }) => ({
+				key: id,
+				name,
+				checked: id === theme,
 				canCheck: true,
-				onClick: () => setTheme(value),
+				onClick: () => update('theme', id),
 			})),
 		},
 	},

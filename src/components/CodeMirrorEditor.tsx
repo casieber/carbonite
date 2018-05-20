@@ -6,8 +6,15 @@ import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/monokai.css';
 import 'codemirror/mode/javascript/javascript';
 
+import { themes } from '../constants';
+
+// Load the theme css
+Object.keys(themes).forEach(id => {
+	require(`codemirror/theme/${id}.css`);
+});
+
 export default class CodeMirrorEditor extends React.Component<
-	any,
+	{ theme: string },
 	{ value: string }
 > {
 	state = {
@@ -15,9 +22,11 @@ export default class CodeMirrorEditor extends React.Component<
 	};
 
 	render() {
+		const { theme } = this.props;
+
 		const options = {
 			mode: { name: 'javascript', typescript: true },
-			theme: 'monokai',
+			theme,
 			lineNumbers: false,
 			scrollBarStyle: null,
 			viewportMargin: Infinity,
