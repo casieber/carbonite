@@ -9,7 +9,7 @@ export const defaultConfig: Config = {
 	shadowSpread: 35,
 	shadowOffset: 15,
 	horizontalPadding: 80,
-	verticalPadding: 60,
+	verticalPadding: 80,
 };
 
 const AppContext = createContext(defaultConfig);

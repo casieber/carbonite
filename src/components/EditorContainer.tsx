@@ -17,8 +17,7 @@ const innerContainerStyles = ({
 	horizontalPadding,
 	verticalPadding,
 }: any): React.CSSProperties => ({
-	padding: `${verticalPadding}px ${horizontalPadding + 40}px ${verticalPadding +
-		40}px ${horizontalPadding}px`,
+	padding: `${verticalPadding}px ${horizontalPadding}px`,
 });
 
 const alphaImage: React.CSSProperties = {
