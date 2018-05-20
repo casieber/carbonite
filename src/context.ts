@@ -6,8 +6,8 @@ export const defaultConfig: Config = {
 	backgroundColor: '#F5A623',
 	theme: 'seti',
 	shadowEnabled: true,
-	shadowSpread: 30,
-	shadowOffset: 10,
+	shadowSpread: 35,
+	shadowOffset: 15,
 	horizontalPadding: 80,
 	verticalPadding: 60,
 };
