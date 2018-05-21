@@ -1,15 +1,17 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { initializeIcons } from '@uifabric/icons';
 import 'core-js';
 import 'isomorphic-fetch';
 
+import { initializeApp, initializeConfig } from './initialize';
 import App from './components/App';
 
 import { ROOT_NODE_ID } from './constants';
 
-Office.initialize = () => {};
+initializeApp();
+const config = initializeConfig();
 
-initializeIcons();
-
-ReactDOM.render(<App />, document.getElementById(ROOT_NODE_ID));
+ReactDOM.render(
+	<App defaultConfig={config} />,
+	document.getElementById(ROOT_NODE_ID),
+);

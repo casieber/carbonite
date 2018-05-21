@@ -6,7 +6,7 @@ import EditorContainer from './EditorContainer';
 
 import AppContext from '../context';
 import { Config } from '../types';
-import { configFromQuery } from '../util/configFromQuery';
+import { saveConfig } from '../storage';
 
 const styleEmbed = ({ shadowEnabled, shadowOffset, shadowSpread }: any) => `
 html, body, #app {
@@ -49,14 +49,20 @@ const appStyles: React.CSSProperties = {
 	backgroundColor: '#121212',
 };
 
-const config = configFromQuery();
+interface AppProps {
+	defaultConfig: Config;
+}
 
-export default class App extends React.Component<{}, { config: Config }> {
-	constructor(props: {}) {
+interface AppState {
+	config: Config;
+}
+
+export default class App extends React.Component<AppProps, AppState> {
+	constructor(props: AppProps) {
 		super(props);
 
 		this.state = {
-			config,
+			config: props.defaultConfig,
 		};
 	}
 
@@ -68,7 +74,9 @@ export default class App extends React.Component<{}, { config: Config }> {
 				<div style={appStyles}>
 					<Fabric>
 						<Toolbar update={(key, value) => this.updateConfig(key, value)} />
-						<EditorContainer onValueChange={value => this.updateConfig('value', value)} />
+						<EditorContainer
+							onValueChange={value => this.updateConfig('value', value)}
+						/>
 						<style>{styleEmbed(config)}</style>
 					</Fabric>
 				</div>
@@ -77,11 +85,12 @@ export default class App extends React.Component<{}, { config: Config }> {
 	}
 
 	private updateConfig<K extends keyof Config>(key: K, value: Config[K]) {
-		this.setState({
-			config: {
-				...this.state.config,
-				[key]: value,
-			},
-		});
+		const config = {
+			...this.state.config,
+			[key]: value,
+		};
+
+		this.setState({ config });
+		saveConfig(config);
 	}
 }

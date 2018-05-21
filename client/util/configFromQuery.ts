@@ -1,4 +1,3 @@
-import { defaultConfig } from '../constants';
 import { Config } from '../types';
 
 const queryToObj = (query: string) =>
@@ -8,14 +7,14 @@ const queryToObj = (query: string) =>
 		return { ...obj, [key]: decoded ? JSON.parse(decoded) : undefined };
 	}, {});
 
-export function configFromQuery(): Config {
+export function configFromQuery(): Config | null {
 	const search = window.location.search;
 
 	if (!search) {
-		return defaultConfig;
+		return null;
 	}
 
-	const query = queryToObj(search.slice(1));
+	const query = queryToObj(search.slice(1)) as Config;
 
-	return { ...defaultConfig, ...query };
+	return { ...query };
 }
