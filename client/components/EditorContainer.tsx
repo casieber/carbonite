@@ -3,7 +3,11 @@ import * as React from 'react';
 import CodeMirrorEditor from './CodeMirrorEditor';
 import { Color } from '../types';
 import AppContext from '../context';
-import { CAPTURE_NODE_ID, CAPTURE_HIDDEN_CLASSNAME } from '../constants';
+import {
+	CAPTURE_NODE_ID,
+	CAPTURE_HIDDEN_CLASSNAME,
+	BACKGROUND_COLOR_ID,
+} from '../constants';
 
 const containerStyles: React.CSSProperties = {
 	display: 'flex',
@@ -22,23 +26,29 @@ const innerContainerStyles = ({
 
 const alphaImage: React.CSSProperties = {
 	position: 'absolute',
-	width: '100%',
-	height: '100%',
+	top: 0,
+	bottom: 0,
+	left: 0,
+	right: 0,
 	background:
 		'url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAMUlEQVQ4T2NkYGAQYcAP3uCTZhw1gGGYhAGBZIA/nYDCgBDAm9BGDWAAJyRCgLaBCAAgXwixzAS0pgAAAABJRU5ErkJggg==)',
 };
 
 const whiteImage: React.CSSProperties = {
 	position: 'absolute',
-	width: '100%',
-	height: '100%',
+	top: 0,
+	bottom: 0,
+	left: 0,
+	right: 0,
 	backgroundColor: 'white',
 };
 
 const buildColorStyle = (color: string | Color): React.CSSProperties => ({
 	position: 'absolute',
-	width: '100%',
-	height: '100%',
+	top: 0,
+	bottom: 0,
+	left: 0,
+	right: 0,
 	backgroundColor:
 		typeof color === 'string'
 			? color
@@ -59,7 +69,9 @@ export interface EditorContainerProps {
 	onValueChange: (value: string) => void;
 }
 
-export default class EditorContainer extends React.Component<EditorContainerProps> {
+export default class EditorContainer extends React.Component<
+	EditorContainerProps
+> {
 	render() {
 		const { onValueChange } = this.props;
 		return (
@@ -82,9 +94,18 @@ export default class EditorContainer extends React.Component<EditorContainerProp
 							<div style={backgroundLayers}>
 								<div style={whiteImage} className={CAPTURE_HIDDEN_CLASSNAME} />
 								<div style={alphaImage} className={CAPTURE_HIDDEN_CLASSNAME} />
-								<div style={buildColorStyle(backgroundColor)} />
+								<div
+									style={buildColorStyle(backgroundColor)}
+									id={BACKGROUND_COLOR_ID}
+									className={CAPTURE_HIDDEN_CLASSNAME}
+								/>
 							</div>
-							<CodeMirrorEditor theme={theme} language={language} value={value} onValueChange={onValueChange}/>
+							<CodeMirrorEditor
+								theme={theme}
+								language={language}
+								value={value}
+								onValueChange={onValueChange}
+							/>
 						</div>
 					</div>
 				)}

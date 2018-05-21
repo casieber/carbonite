@@ -1,9 +1,11 @@
 import domToImage, { Options } from 'dom-to-image';
 
-import { CAPTURE_NODE_ID, CAPTURE_HIDDEN_CLASSNAME } from '../constants';
+import {
+	CAPTURE_NODE_ID,
+	CAPTURE_HIDDEN_CLASSNAME,
+	BACKGROUND_COLOR_ID,
+} from '../constants';
 import { Config } from '../types';
-
-const test = true;
 
 /**
  * Generates a png image from a DOM node.
@@ -13,9 +15,10 @@ const test = true;
 const takeImage = (options: Config): Promise<string> => {
 	// dom-to-image does not work in IE or Safari, need to send to api for processing
 	if (
-		test ||
-		navigator.userAgent.indexOf('MSIE') !== -1 ||
-		navigator.userAgent.indexOf('Safari') !== -1
+		!document.implementation.hasFeature(
+			'w3.org/TR/SVG11/feature#Extensibility',
+			'1.1',
+		)
 	) {
 		return fetch('/image', {
 			method: 'POST',
@@ -31,12 +34,23 @@ const takeImage = (options: Config): Promise<string> => {
 
 function takeImageLocal(): Promise<string> {
 	const node = document.getElementById(CAPTURE_NODE_ID);
+	const bgNode = document.getElementById(BACKGROUND_COLOR_ID);
 
-	if (!node) {
+	if (!node || !bgNode) {
 		throw new Error('Could not find the node to capture');
 	}
 
+	const scale = 2;
+	const height = node.offsetHeight * scale;
+	const width = node.offsetWidth * scale;
+	const bgcolor = bgNode.style.backgroundColor;
+
 	const config: Options = {
+		style: {
+			transform: `scale(${scale})`,
+			'transform-origin': 'center',
+		},
+		bgcolor: bgcolor || undefined,
 		filter: (n: any) => {
 			if (n.className) {
 				return String(n.className).indexOf(CAPTURE_HIDDEN_CLASSNAME) < 0;
@@ -44,6 +58,8 @@ function takeImageLocal(): Promise<string> {
 
 			return true;
 		},
+		width,
+		height,
 	};
 
 	return domToImage.toPng(node, config);

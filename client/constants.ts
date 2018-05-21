@@ -17,6 +17,11 @@ export const CAPTURE_NODE_ID = 'capture-container';
 export const CAPTURE_HIDDEN_CLASSNAME = 'eliminateOnSave';
 
 /**
+ * DOM node id for the background color node
+ */
+export const BACKGROUND_COLOR_ID = 'background-color';
+
+/**
  * Supported themes
  */
 export const themeList = [

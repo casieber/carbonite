@@ -13,7 +13,8 @@ import Toggle from './Toggle';
 import BackgroundPicker from './BackgroundPicker';
 import { Config } from '../types';
 
-import { insertImage } from '../actions';
+import { insertImage, saveImage } from '../actions';
+import { isEmbedded } from '../util/isEmbedded';
 
 /**
  * Left side menu bar items
@@ -185,7 +186,7 @@ const farItems = ({ config, reset }: any): IContextualMenuItem[] => [
 		onRender: item => (
 			<CommandButton
 				iconProps={{ iconName: 'Picture' }}
-				onClick={() => insertImage(config)}
+				onClick={() => (isEmbedded() ? insertImage(config) : saveImage(config))}
 			>
 				{item.name}
 			</CommandButton>
