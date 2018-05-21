@@ -1,10 +1,10 @@
-const express = require('express');
-const https = require('https');
-const puppeteer = require('puppeteer');
-const path = require('path');
-const bodyParser = require('body-parser');
+import * as express from 'express';
+import * as https from 'https';
+import * as puppeteer from 'puppeteer';
+import * as path from 'path';
+import * as bodyParser from 'body-parser';
 
-const fakeCert = require('./ssl');
+import fakeCert from './ssl';
 
 const dist = path.join(__dirname, '../dist');
 const port = 3000;
@@ -17,7 +17,7 @@ const options = {
 	},
 };
 
-const toQueryPair = (rawKey, rawValue) => {
+const toQueryPair = (rawKey: string, rawValue: string) => {
 	const key = encodeURIComponent(rawKey);
 	const value = encodeURIComponent(JSON.stringify(rawValue));
 	return `${key}=${value}`;
@@ -35,10 +35,12 @@ puppeteer.launch().then(browser => {
 				.join('&');
 
 			return page.goto(`https://localhost:${port}?${query}`).then(() => {
-				return page.evaluate(() => window.takeImageLocal()).then(img => {
-					res.send(img);
-					return page.close();
-				});
+				return page
+					.evaluate(() => (window as any).takeImageLocal())
+					.then(img => {
+						res.send(img);
+						return page.close();
+					});
 			});
 		});
 	});

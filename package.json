@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server",
     "build": "webpack",
-    "server": "node server/index.js"
+    "server": "tsc -p ./config/tsconfig.server.json & node ./dist_server/index.js"
   },
   "dependencies": {
     "body-parser": "^1.18.3",

@@ -1,18 +1,20 @@
 {
     "compilerOptions": {
-        "module": "es6",
+        "module": "commonjs",
         "moduleResolution": "node",
         "sourceMap": true,
         "strict": true,
-        "jsx": "react",
-        "target": "es5",
+        "target": "es6",
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "noImplicitThis": true,
         "noImplicitReturns": true,
-        "outDir": "dist"
+        "outDir": "../dist_server"
     },
     "exclude": [
         "node_modules"
-    ]
+	],
+	"include": [
+		"../server/**/*.ts"
+	]
 }

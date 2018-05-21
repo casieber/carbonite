@@ -3,8 +3,6 @@ const path = require('path');
 const fs = require('fs');
 const del = require('del');
 
-let fakeCert;
-
 // Use a self-signed certificate if no certificate was configured.
 // Cycle certs every 24 hours
 const certPath = path.join(__dirname, './server.pem');
@@ -13,7 +11,7 @@ let certExists = fs.existsSync(certPath);
 if (certExists) {
 	const certStat = fs.statSync(certPath);
 	const certTtl = 1000 * 60 * 60 * 24;
-	const now = new Date();
+	const now = Date.now();
 
 	// cert is more than 30 days old, kill it with fire
 	if ((now - certStat.ctime) / certTtl > 30) {
@@ -83,6 +81,5 @@ if (!certExists) {
 
 	fs.writeFileSync(certPath, pems.private + pems.cert, { encoding: 'utf-8' });
 }
-fakeCert = fs.readFileSync(certPath);
 
-module.exports = fakeCert;
+export default fs.readFileSync(certPath);

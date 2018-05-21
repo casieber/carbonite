@@ -1,3 +1,4 @@
-dist/*.js
+dist/**/*.js
+dist_server
 node_modules
 server/ssl/server.pem
