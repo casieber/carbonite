@@ -7,6 +7,7 @@ import EditorContainer from './EditorContainer';
 import AppContext from '../context';
 import { Config } from '../types';
 import { saveConfig } from '../storage';
+import { defaultConfig } from '../constants';
 
 const styleEmbed = ({ shadowEnabled, shadowOffset, shadowSpread }: any) => `
 html, body, #app {
@@ -73,9 +74,12 @@ export default class App extends React.Component<AppProps, AppState> {
 			<AppContext.Provider value={config}>
 				<div style={appStyles}>
 					<Fabric>
-						<Toolbar update={(key, value) => this.updateConfig(key, value)} />
+						<Toolbar
+							update={(key, value) => this.updateConfigProperty(key, value)}
+							reset={this.resetConfig}
+						/>
 						<EditorContainer
-							onValueChange={value => this.updateConfig('value', value)}
+							onValueChange={value => this.updateConfigProperty('value', value)}
 						/>
 						<style>{styleEmbed(config)}</style>
 					</Fabric>
@@ -84,12 +88,30 @@ export default class App extends React.Component<AppProps, AppState> {
 		);
 	}
 
-	private updateConfig<K extends keyof Config>(key: K, value: Config[K]) {
+	private resetConfig = () => {
+		const { config } = this.state;
+
+		this.updateConfig({
+			...defaultConfig,
+			// Don't reset a few special properies,
+			value: config.value,
+			language: config.language,
+		});
+	};
+
+	private updateConfigProperty<K extends keyof Config>(
+		key: K,
+		value: Config[K],
+	) {
 		const config = {
 			...this.state.config,
 			[key]: value,
 		};
 
+		this.updateConfig(config);
+	}
+
+	private updateConfig(config: Config) {
 		this.setState({ config });
 		saveConfig(config);
 	}

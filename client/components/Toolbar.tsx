@@ -171,7 +171,14 @@ const closeItems = ({
 /**
  * Right side menu bar items
  */
-const farItems = (config: Config): IContextualMenuItem[] => [
+const farItems = ({ config, reset }: any): IContextualMenuItem[] => [
+	{
+		key: 'reset',
+		name: 'Reset',
+		onRender: item => (
+			<CommandButton onClick={reset}>{item.name}</CommandButton>
+		),
+	},
 	{
 		key: 'save-png',
 		name: 'Save PNG',
@@ -188,11 +195,12 @@ const farItems = (config: Config): IContextualMenuItem[] => [
 
 interface ToolbarProps {
 	update: <K extends keyof Config>(key: K, value: Config[K]) => any;
+	reset: () => any;
 }
 
 export default class Toolbar extends React.Component<ToolbarProps> {
 	render() {
-		const { update } = this.props;
+		const { update, reset } = this.props;
 
 		return (
 			<AppContext.Consumer>
@@ -219,7 +227,7 @@ export default class Toolbar extends React.Component<ToolbarProps> {
 								shadowSpread,
 								language,
 							})}
-							farItems={farItems(config)}
+							farItems={farItems({ config, reset })}
 						/>
 					);
 				}}
