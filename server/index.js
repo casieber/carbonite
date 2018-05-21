@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 
 const fakeCert = require('./ssl');
 
-const dist = path.join(__dirname, 'dist');
+const dist = path.join(__dirname, '../dist');
 const port = 3000;
 
 const options = {
@@ -25,7 +25,7 @@ puppeteer.launch().then(browser => {
 	app.post('/image', (req, res) => {
 		return browser.newPage().then(page => {
 			const query = Object.keys(req.body)
-				.map(key => `${key}=${req.body[key]}`)
+				.map(key => `${key}=${JSON.stringify(req.body[key])}`)
 				.join('&');
 
 			return page.goto(`https://localhost:${port}?${query}`).then(() => {
