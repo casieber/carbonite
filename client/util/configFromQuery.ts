@@ -2,12 +2,11 @@ import { defaultConfig } from '../constants';
 import { Config } from '../types';
 
 const queryToObj = (query: string) =>
-	query
-		? query.split('&').reduce((obj, pair) => {
-				const [key, value] = pair.split('=');
-				return { ...obj, [key]: JSON.parse(decodeURIComponent(value)) };
-		  }, {})
-		: {};
+	query.split('&').reduce((obj, pair) => {
+		const [key, value] = pair.split('=');
+		const decoded = decodeURIComponent(value);
+		return { ...obj, [key]: decoded ? JSON.parse(decoded) : undefined };
+	}, {});
 
 export function configFromQuery(): Config {
 	const search = window.location.search;
