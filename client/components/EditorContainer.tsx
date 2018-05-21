@@ -55,8 +55,13 @@ const backgroundLayers: React.CSSProperties = {
 	right: 0,
 };
 
-export default class EditorContainer extends React.Component {
+export interface EditorContainerProps {
+	onValueChange: (value: string) => void;
+}
+
+export default class EditorContainer extends React.Component<EditorContainerProps> {
 	render() {
+		const { onValueChange } = this.props;
 		return (
 			<AppContext.Consumer>
 				{({
@@ -65,6 +70,7 @@ export default class EditorContainer extends React.Component {
 					horizontalPadding,
 					theme,
 					language,
+					value,
 				}) => (
 					<div style={containerStyles} id={CAPTURE_NODE_ID}>
 						<div
@@ -78,7 +84,7 @@ export default class EditorContainer extends React.Component {
 								<div style={alphaImage} className={CAPTURE_HIDDEN_CLASSNAME} />
 								<div style={buildColorStyle(backgroundColor)} />
 							</div>
-							<CodeMirrorEditor theme={theme} language={language} />
+							<CodeMirrorEditor theme={theme} language={language} value={value} onValueChange={onValueChange}/>
 						</div>
 					</div>
 				)}

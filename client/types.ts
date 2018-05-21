@@ -42,4 +42,9 @@ export type Config = {
 	 * The current active editor language.
 	 */
 	language: string;
+
+	/**
+	 * The current text in the editor
+	 */
+	value: string;
 };

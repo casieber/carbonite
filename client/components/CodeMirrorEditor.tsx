@@ -22,15 +22,10 @@ const languageToMode = (languageId: string) => {
 };
 
 export default class CodeMirrorEditor extends React.Component<
-	{ theme: string; language: string },
-	{ value: string }
-> {
-	state = {
-		value: `function foo() { console.log('Hello, World!'); }`,
-	};
+	{ theme: string; language: string; value: string; onValueChange: (value: string) => void; }> {
 
 	render() {
-		const { theme, language } = this.props;
+		const { theme, language, value, onValueChange } = this.props;
 
 		const options = {
 			mode: languageToMode(language),
@@ -45,9 +40,9 @@ export default class CodeMirrorEditor extends React.Component<
 		};
 		return (
 			<CodeMirror
-				value={this.state.value}
+				value={value}
 				options={options}
-				onBeforeChange={(_, __, value) => this.setState({ value })}
+				onBeforeChange={(_, __, value) => onValueChange(value)}
 				className="CodeMirror-container"
 			/>
 		);

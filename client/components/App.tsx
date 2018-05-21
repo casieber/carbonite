@@ -68,7 +68,7 @@ export default class App extends React.Component<{}, { config: Config }> {
 				<div style={appStyles}>
 					<Fabric>
 						<Toolbar update={(key, value) => this.updateConfig(key, value)} />
-						<EditorContainer />
+						<EditorContainer onValueChange={value => this.updateConfig('value', value)} />
 						<style>{styleEmbed(config)}</style>
 					</Fabric>
 				</div>

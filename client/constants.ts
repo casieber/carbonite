@@ -535,6 +535,10 @@ export const languageList = [
 
 export const languages = toIdMap(languageList);
 
+const defaultText = `function foo() {
+	console.log('Hello, World!');
+}`;
+
 export const defaultConfig: Config = {
 	backgroundColor: '#F5A623',
 	theme: 'seti',
@@ -544,4 +548,5 @@ export const defaultConfig: Config = {
 	horizontalPadding: 80,
 	verticalPadding: 80,
 	language: 'TypeScript',
+	value: defaultText,
 };
