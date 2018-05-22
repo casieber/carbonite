@@ -1,35 +1,27 @@
 import { initializeIcons } from '@uifabric/icons';
+import { createStore, Store, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 
-import { Config } from './types';
-import { defaultConfig } from './constants';
-import { loadConfig } from './storage';
-import { configFromQuery } from './util/configFromQuery';
-
-/**
- * Generates the starting config object.
- *
- * @returns The initial Config to use
- */
-export function initializeConfig(): Config {
-	/**
-	 * Config settings come from three possible
-	 * places:
-	 * 		1. Query parameters
-	 * 		2. Saved LocalStorage settings
-	 * 		3. Static config defaults
-	 */
-	return {
-		...defaultConfig,
-		...(loadConfig() || {}),
-		...(configFromQuery() || {}),
-	};
-}
+import rootReducer, { ApplicationState } from './modules';
 
 /**
  * Performs any initial initialization that needs to happen for the app.
  */
-export function initializeApp() {
+export default function initializeApp() {
 	Office.initialize = () => {};
 
 	initializeIcons();
+
+	const store = initializeStore();
+
+	return { store };
+}
+
+/**
+ * Generates the starting redux store.
+ *
+ * @returns The initial Store to use
+ */
+function initializeStore(): Store<ApplicationState> {
+	return createStore(rootReducer, applyMiddleware(thunk));
 }

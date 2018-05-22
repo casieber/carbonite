@@ -1,5 +1,4 @@
 import { toIdMap } from './util/toIdMap';
-import { Config } from './types';
 
 /**
  * DOM node id for the root node of the app.
@@ -539,19 +538,3 @@ export const languageList = [
 ];
 
 export const languages = toIdMap(languageList);
-
-const defaultText = `function foo() {
-	console.log('Hello, World!');
-}`;
-
-export const defaultConfig: Config = {
-	backgroundColor: '#F5A623',
-	theme: 'seti',
-	shadowEnabled: true,
-	shadowSpread: 35,
-	shadowOffset: 15,
-	horizontalPadding: 80,
-	verticalPadding: 80,
-	language: 'TypeScript',
-	value: defaultText,
-};

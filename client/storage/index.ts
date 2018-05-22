@@ -1,11 +1,11 @@
-import { Config } from '../types';
+import { ApplicationState } from '../modules';
 
 const STORAGE_KEY = 'carbonite-config';
 
 /**
  * Loads the stored Config from local storage.
  */
-export function loadConfig(): Config | null {
+export function loadConfig(): ApplicationState | null {
 	if (!localStorage) {
 		return null;
 	}
@@ -36,7 +36,7 @@ export function loadConfig(): Config | null {
  *
  * @param config The config to save
  */
-export function saveConfig(config: Config) {
+export function saveConfig(config: ApplicationState) {
 	if (!localStorage) {
 		return;
 	}

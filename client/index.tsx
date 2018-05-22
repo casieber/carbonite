@@ -2,16 +2,18 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import 'core-js';
 import 'isomorphic-fetch';
+import { Provider } from 'react-redux';
 
-import { initializeApp, initializeConfig } from './initialize';
+import initialize from './initialize';
 import App from './components/App';
 
 import { ROOT_NODE_ID } from './constants';
 
-initializeApp();
-const config = initializeConfig();
+const { store } = initialize();
 
 ReactDOM.render(
-	<App defaultConfig={config} />,
+	<Provider store={store}>
+		<App />
+	</Provider>,
 	document.getElementById(ROOT_NODE_ID),
 );

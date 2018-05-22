@@ -1,16 +1,21 @@
 import * as React from 'react';
 import { SketchPicker } from 'react-color';
+import { connect, Dispatch } from 'react-redux';
 import { CommandButton, Callout } from 'office-ui-fabric-react';
 
-import { Color } from '../types';
-
-import AppContext from '../context';
+import { Color, updateBackground } from '../modules/styling';
+import { ApplicationState } from '../modules';
 
 interface BackgroundPickerProps {
 	/**
 	 * Called when the color changes.
 	 */
 	onChange: (color: Color) => any;
+
+	/**
+	 * The current color.
+	 */
+	color: Color;
 }
 
 interface BackgroundPickerState {
@@ -20,7 +25,7 @@ interface BackgroundPickerState {
 	open: boolean;
 }
 
-export default class BackgroundPicker extends React.Component<
+class BackgroundPicker extends React.Component<
 	BackgroundPickerProps,
 	BackgroundPickerState
 > {
@@ -31,7 +36,7 @@ export default class BackgroundPicker extends React.Component<
 	buttonRef = React.createRef<any>();
 
 	render() {
-		const { onChange } = this.props;
+		const { color, onChange } = this.props;
 		const { open } = this.state;
 
 		return (
@@ -39,21 +44,11 @@ export default class BackgroundPicker extends React.Component<
 				<div ref={this.buttonRef}>
 					<CommandButton onClick={this.showPicker}>Background</CommandButton>
 				</div>
-				<AppContext.Consumer>
-					{value =>
-						open && (
-							<Callout
-								onDismiss={this.hidePicker}
-								target={this.buttonRef.current}
-							>
-								<SketchPicker
-									color={value.backgroundColor}
-									onChange={({ rgb }) => onChange(rgb)}
-								/>
-							</Callout>
-						)
-					}
-				</AppContext.Consumer>
+				{open && (
+					<Callout onDismiss={this.hidePicker} target={this.buttonRef.current}>
+						<SketchPicker color={color} onChange={({ rgb }) => onChange(rgb)} />
+					</Callout>
+				)}
 			</React.Fragment>
 		);
 	}
@@ -62,3 +57,13 @@ export default class BackgroundPicker extends React.Component<
 
 	private hidePicker = () => this.setState({ open: false });
 }
+
+const mapStateToProps = (state: ApplicationState) => ({
+	color: state.styling.background.color,
+});
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+	onChange: (color: Color) => dispatch(updateBackground({ color })),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(BackgroundPicker);

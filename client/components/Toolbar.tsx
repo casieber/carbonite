@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
 import {
 	CommandBar,
 	IContextualMenuItem,
@@ -6,29 +7,35 @@ import {
 } from 'office-ui-fabric-react';
 
 import { themeList, languageList } from '../constants';
-import AppContext from '../context';
 
 import Slider from './Slider';
 import Toggle from './Toggle';
 import BackgroundPicker from './BackgroundPicker';
-import { Config } from '../types';
 
-import { insertImage, saveImage } from '../actions';
 import { isEmbedded } from '../util/isEmbedded';
+import { ApplicationState } from '../modules';
+import { reset } from '../modules/actions';
+import {
+	PaddingState,
+	ShadowState,
+	updatePadding,
+	updateShadow,
+} from '../modules/styling';
+import { EditorState, setTheme, setLanguage } from '../modules/editor';
+import { saveImage, insertImage } from '../modules/image';
 
 /**
  * Left side menu bar items
  */
 const closeItems = ({
-	theme,
-	language,
-	horizontalPadding,
-	verticalPadding,
-	update,
-	shadowEnabled,
-	shadowOffset,
-	shadowSpread,
-}: any): IContextualMenuItem[] => [
+	editor: { theme, language },
+	padding,
+	shadow,
+	setTheme,
+	setLanguage,
+	updatePadding,
+	updateShadow,
+}: ToolbarProps): IContextualMenuItem[] => [
 	{
 		key: 'theme',
 		name: 'Theme',
@@ -45,7 +52,7 @@ const closeItems = ({
 				name,
 				checked: id === theme,
 				canCheck: true,
-				onClick: () => update('theme', id),
+				onClick: () => setTheme(id),
 			})),
 		},
 	},
@@ -65,16 +72,16 @@ const closeItems = ({
 				name: id,
 				checked: id === language,
 				canCheck: true,
-				onClick: () => update('language', id),
+				onClick: () => {
+					setLanguage(id);
+				},
 			})),
 		},
 	},
 	{
 		key: 'bg',
 		name: 'Background',
-		onRender: () => (
-			<BackgroundPicker onChange={color => update('backgroundColor', color)} />
-		),
+		onRender: () => <BackgroundPicker />,
 	},
 	{
 		key: 'settings',
@@ -97,8 +104,8 @@ const closeItems = ({
 						<Slider
 							min={0}
 							max={200}
-							value={verticalPadding}
-							onChange={value => update('verticalPadding', value)}
+							value={padding.vertical}
+							onChange={vertical => updatePadding({ ...padding, vertical })}
 						/>
 					),
 				},
@@ -113,8 +120,8 @@ const closeItems = ({
 						<Slider
 							min={0}
 							max={200}
-							value={horizontalPadding}
-							onChange={value => update('horizontalPadding', value)}
+							value={padding.horizontal}
+							onChange={horizontal => updatePadding({ ...padding, horizontal })}
 						/>
 					),
 				},
@@ -127,8 +134,8 @@ const closeItems = ({
 					key: 'shadow-enabled-toggle',
 					onRender: () => (
 						<Toggle
-							value={shadowEnabled}
-							onChange={value => update('shadowEnabled', value)}
+							value={shadow.enabled}
+							onChange={enabled => updateShadow({ ...shadow, enabled })}
 						/>
 					),
 				},
@@ -143,8 +150,8 @@ const closeItems = ({
 						<Slider
 							min={0}
 							max={100}
-							value={shadowOffset}
-							onChange={value => update('shadowOffset', value)}
+							value={shadow.offset}
+							onChange={offset => updateShadow({ ...shadow, offset })}
 						/>
 					),
 				},
@@ -159,8 +166,8 @@ const closeItems = ({
 						<Slider
 							min={0}
 							max={100}
-							value={shadowSpread}
-							onChange={value => update('shadowSpread', value)}
+							value={shadow.spread}
+							onChange={spread => updateShadow({ ...shadow, spread })}
 						/>
 					),
 				},
@@ -172,7 +179,11 @@ const closeItems = ({
 /**
  * Right side menu bar items
  */
-const farItems = ({ config, reset }: any): IContextualMenuItem[] => [
+const farItems = ({
+	reset,
+	insertImage,
+	saveImage,
+}: ToolbarProps): IContextualMenuItem[] => [
 	{
 		key: 'reset',
 		name: 'Reset',
@@ -186,7 +197,7 @@ const farItems = ({ config, reset }: any): IContextualMenuItem[] => [
 		onRender: item => (
 			<CommandButton
 				iconProps={{ iconName: 'Picture' }}
-				onClick={() => (isEmbedded() ? insertImage(config) : saveImage(config))}
+				onClick={() => (isEmbedded() ? insertImage() : saveImage())}
 			>
 				{item.name}
 			</CommandButton>
@@ -195,44 +206,37 @@ const farItems = ({ config, reset }: any): IContextualMenuItem[] => [
 ];
 
 interface ToolbarProps {
-	update: <K extends keyof Config>(key: K, value: Config[K]) => any;
-	reset: () => any;
+	padding: PaddingState;
+	shadow: ShadowState;
+	editor: EditorState;
+
+	reset: typeof reset;
+	setTheme: typeof setTheme;
+	setLanguage: typeof setLanguage;
+	updatePadding: typeof updatePadding;
+	updateShadow: typeof updateShadow;
+	saveImage: () => any;
+	insertImage: () => any;
 }
 
-export default class Toolbar extends React.Component<ToolbarProps> {
-	render() {
-		const { update, reset } = this.props;
+const Toolbar = (props: ToolbarProps) => (
+	<CommandBar items={closeItems(props)} farItems={farItems(props)} />
+);
 
-		return (
-			<AppContext.Consumer>
-				{config => {
-					const {
-						verticalPadding,
-						horizontalPadding,
-						shadowEnabled,
-						shadowOffset,
-						shadowSpread,
-						theme,
-						language,
-					} = config;
+const mapStateToProps = (state: ApplicationState) => ({
+	padding: state.styling.padding,
+	shadow: state.styling.shadow,
+	editor: state.editor,
+});
 
-					return (
-						<CommandBar
-							items={closeItems({
-								verticalPadding,
-								horizontalPadding,
-								theme,
-								update,
-								shadowEnabled,
-								shadowOffset,
-								shadowSpread,
-								language,
-							})}
-							farItems={farItems({ config, reset })}
-						/>
-					);
-				}}
-			</AppContext.Consumer>
-		);
-	}
-}
+const mapDispatchToProps = {
+	reset,
+	setTheme,
+	setLanguage,
+	updatePadding,
+	updateShadow,
+	saveImage,
+	insertImage,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Toolbar);
