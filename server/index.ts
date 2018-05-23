@@ -17,12 +17,6 @@ const options = {
 	},
 };
 
-const toQueryPair = (rawKey: string, rawValue: string) => {
-	const key = encodeURIComponent(rawKey);
-	const value = encodeURIComponent(JSON.stringify(rawValue));
-	return `${key}=${value}`;
-};
-
 puppeteer.launch().then(browser => {
 	const app = express();
 
@@ -30,17 +24,15 @@ puppeteer.launch().then(browser => {
 
 	app.post('/image', (req, res) => {
 		return browser.newPage().then(page => {
-			const query = Object.keys(req.body)
-				.map(key => toQueryPair(key, req.body[key]))
-				.join('&');
-
-			return page.goto(`https://localhost:${port}?${query}`).then(() => {
+			return page.goto(`https://localhost:${port}`).then(() => {
 				return page
-					.evaluate(() => (window as any).takeImageLocal())
-					.then(img => {
-						res.send(img);
-						return page.close();
-					});
+					.evaluate(state => (window as any).replaceState(state), req.body)
+					.then(() =>
+						page.evaluate(() => (window as any).takeImageLocal()).then(img => {
+							res.send(img);
+							return page.close();
+						}),
+					);
 			});
 		});
 	});
